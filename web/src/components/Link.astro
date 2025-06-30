@@ -1,0 +1,25 @@
+---
+import { globalState } from '@/globalState'
+import { normalizePath } from '../utils/normalizePath'
+
+type Props = {
+  path: string
+  class?: string
+  normalizePath?: boolean
+}
+
+const { preview } = globalState
+
+const { path, class: className, normalizePath: normalizePathValue = true } = Astro.props
+const href = normalizePathValue ? normalizePath(path, preview) : path
+---
+
+<a
+  href={href}
+  class:list={[
+    'inline-flex items-center gap-3 rounded-md px-4 py-3 text-sm font-semibold no-underline transition-all duration-200',
+    className,
+  ]}
+>
+  <slot />
+</a>

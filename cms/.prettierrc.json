@@ -1,0 +1,15 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "semi": false,
+  "plugins": ["prettier-plugin-organize-imports"],
+  "overrides": [
+    {
+      "files": ["**/importMap.js", "**/payload-types.ts", "**/**.yaml"],
+      "options": {
+        "requirePragma": true
+      }
+    }
+  ]
+}

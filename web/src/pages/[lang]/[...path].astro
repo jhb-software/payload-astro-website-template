@@ -1,0 +1,20 @@
+---
+import CollectionLayout from '@/layout/collections/CollectionLayout.astro'
+import { getStaticPaths as getStaticPathsCms } from '../../cms/getStaticPaths'
+import { locales } from '../../cms/locales'
+import type { Locale } from '../../cms/types'
+
+export async function getStaticPaths() {
+  return await getStaticPathsCms()
+}
+
+const props = Astro.props
+const { lang } = Astro.params
+
+if (!locales.includes(lang!)) {
+  return Astro.redirect(Astro.url.pathname, 404)
+}
+const locale = lang as Locale
+---
+
+<CollectionLayout pageProps={props} preview={false} locale={locale} />

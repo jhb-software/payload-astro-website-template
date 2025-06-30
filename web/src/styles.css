@@ -1,0 +1,92 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: 'Montserrat Variable', ui-sans-serif, system-ui, -apple-system;
+  --color-primary: #1e3a8a;
+  --color-primary-dark: #162d6e;
+  --color-neutral-150: #ededed;
+}
+
+@layer base {
+  html {
+    /* Scroll offset to account for the fixed header */
+    @apply scroll-pt-26 md:scroll-pt-22;
+  }
+
+  h1,
+  h2 {
+    @apply sm:hyphenate-none hyphenate;
+  }
+}
+
+@layer components {
+  .header-solid {
+    @apply bg-white;
+  }
+
+  .header-scrolled {
+    @apply bg-white shadow-sm;
+  }
+
+  .header-transparent {
+    @apply bg-transparent;
+  }
+
+  .menu-icon {
+    @apply relative h-12 w-12 cursor-pointer;
+  }
+
+  .menu-icon div {
+    @apply absolute top-0 right-0 bottom-0 left-0 m-auto h-4 w-7;
+  }
+
+  .menu-icon span {
+    @apply absolute block h-[3px] w-full rounded-sm bg-slate-700;
+    transition: all 0.2s cubic-bezier(0.1, 0.82, 0.76, 0.965);
+  }
+
+  .menu-icon span:first-of-type {
+    @apply top-0;
+  }
+
+  .menu-icon span:last-of-type {
+    @apply bottom-0 left-[1/5] w-[4/5];
+  }
+
+  .menu-icon[data-state='open'] span:first-of-type,
+  .menu-icon.active span:first-of-type {
+    @apply top-[4px];
+    transform: rotate(45deg);
+  }
+
+  .menu-icon[data-state='open'] span:last-of-type,
+  .menu-icon.active span:last-of-type {
+    @apply bottom-[9px] left-0 w-full;
+    transform: rotate(-45deg);
+  }
+}
+
+@utility hyphenate {
+  hyphens: auto;
+
+  hyphenate-limit-chars: 10 6 6;
+  -ms-hyphenate-limit-chars: 10 6 6;
+  -webkit-hyphenate-limit-before: 6;
+  -webkit-hyphenate-limit-after: 6;
+}
+
+@utility hyphenate-tight {
+  hyphens: auto;
+
+  hyphenate-limit-chars: 10 6 4;
+  -ms-hyphenate-limit-chars: 10 6 4;
+  -webkit-hyphenate-limit-before: 6;
+  -webkit-hyphenate-limit-after: 4;
+}
+
+@utility hyphenate-none {
+  hyphens: none;
+}

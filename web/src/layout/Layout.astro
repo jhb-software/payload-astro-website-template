@@ -1,0 +1,64 @@
+---
+import { websiteConfig } from '@/config'
+import '@fontsource-variable/montserrat'
+import { VERCEL_ENV } from 'astro:env/server'
+import { ClientRouter } from 'astro:transitions'
+import type { SeoMetadata } from 'cms/src/payload-types'
+import { globalState, initGlobalState } from '../globalState'
+import '../styles.css'
+import Footer from './Footer.astro'
+import Header from './Header.astro'
+import SEOMetadata from './SEOMetadata.astro'
+
+type Props = {
+  meta: SeoMetadata
+  lang: string
+}
+
+const { meta, lang } = Astro.props
+
+await initGlobalState(Astro)
+const { preview } = globalState
+
+const enablePlausible = VERCEL_ENV === 'production' && !preview
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/icon.svg" sizes="any" type="image/svg+xml" />
+
+    <SEOMetadata {...meta} />
+
+    {
+      enablePlausible && (
+        <>
+          <script
+            is:inline
+            id="psbl"
+            data-domain={websiteConfig.domain}
+            src="/js/script.js"
+            async
+          />
+          <script
+            is:inline
+            set:html={`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
+          />
+        </>
+      )
+    }
+
+    <ClientRouter />
+  </head>
+  <body>
+    <Header alternatePaths={meta.alternatePaths} />
+    <main class="py-32">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

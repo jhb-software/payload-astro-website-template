@@ -1,0 +1,14 @@
+---
+import { Code } from 'astro:components'
+import type { CodeBlock } from 'cms/src/payload-types'
+
+type Props = CodeBlock
+
+const { code, caption } = Astro.props
+---
+
+<div>
+  <Code lang={'ts'} code={code} class="!my-0" />
+
+  {caption && <p class="mt-2 text-sm text-neutral-500">{caption}</p>}
+</div>

@@ -1,0 +1,212 @@
+---
+import { defaultLocale } from '@/cms/locales'
+import { websiteConfig } from '@/config'
+import { globalState } from '@/globalState'
+import type { Page, SeoMetadata } from 'cms/src/payload-types'
+import Link from '../components/Link.astro'
+import { normalizePath } from '../utils/normalizePath'
+
+type Props = {
+  alternatePaths: SeoMetadata['alternatePaths']
+}
+
+const { alternatePaths } = Astro.props
+const { locale, preview, labels, header } = globalState
+
+const currentPath = Astro.url.pathname
+
+// NOTE: when the 404 page is rendered, the locale might be undefined, therefore fallback to default locale
+const homePagePath = normalizePath(`/${locale ?? defaultLocale}`, preview)
+---
+
+<header
+  class:list={['fixed z-40 flex w-full items-center justify-between px-4 py-4 md:px-12']}
+  id="header"
+>
+  <a href={homePagePath} class="flex items-center gap-2 text-2xl font-bold">
+    {websiteConfig.name}
+  </a>
+
+  <div class="flex items-center gap-4">
+    <nav>
+      <ul class="hidden list-none gap-4 md:flex">
+        {
+          header.links?.map((link) => (
+            <li>
+              <div class="flex flex-col gap-0.5">
+                <Link path={(link.page as Page)?.path} class="!py-2">
+                  {link.label}
+                </Link>
+                {currentPath === normalizePath((link.page as Page)?.path, preview) && (
+                  <span class="h-0.5 w-full rounded-sm bg-slate-400" />
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="hidden gap-2 md:flex">
+      {
+        alternatePaths.map(({ hreflang, path }, index) => {
+          return (
+            <>
+              <a
+                href={normalizePath(path, preview)}
+                class:list={[
+                  'text-sm font-medium uppercase',
+                  hreflang === locale
+                    ? 'text-primary underline'
+                    : 'hover:text-primary text-slate-600',
+                ]}
+              >
+                {hreflang}
+              </a>
+              {index < alternatePaths.length - 1 && <span class="text-slate-600">/</span>}
+            </>
+          )
+        })
+      }
+    </div>
+  </div>
+
+  <div class="block md:hidden">
+    <button
+      class="menu-icon"
+      id="menu-icon"
+      data-state="closed"
+      aria-label={labels.global['open-menu']}
+      aria-expanded="false"
+      data-label-open={labels.global['open-menu']}
+      data-label-close={labels.global['close-menu']}
+    >
+      <div>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+  </div>
+</header>
+
+<section
+  role="dialog"
+  class:list={['fixed inset-0 z-50 hidden h-screen w-screen bg-white p-4']}
+  id="navbar-modal"
+>
+  <div class="flex h-full flex-col items-stretch justify-between">
+    <ul class="flex flex-col gap-5">
+      {
+        header.links?.map((link) => (
+          <li>
+            <Link path={(link.page as Page)?.path} class="w-full !text-lg">
+              {link.label}
+            </Link>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex flex-row items-center justify-center gap-4">
+      {
+        alternatePaths.map(({ hreflang, path }, index) => {
+          return (
+            <>
+              <a
+                href={normalizePath(path, preview)}
+                class:list={[
+                  'text-lg font-medium uppercase',
+                  hreflang === locale
+                    ? 'text-primary underline'
+                    : 'hover:text-primary text-slate-600',
+                ]}
+              >
+                {hreflang}
+              </a>
+              {index < alternatePaths.length - 1 && <span class="text-slate-600">/</span>}
+            </>
+          )
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupHeader() {
+    const modalButton = document.getElementById('menu-icon')
+    const modal = document.getElementById('navbar-modal')
+    const header = document.getElementById('header')
+
+    if (!modalButton || !modal || !header) {
+      throw new Error('Missing elements')
+    }
+
+    const intercept = document.createElement('div')
+    intercept.setAttribute('data-observer-intercept', '')
+    header.before(intercept)
+
+    const observer = new IntersectionObserver(([entry]) => {
+      header.classList.toggle('header-scrolled', !entry.isIntersecting)
+      header.classList.toggle('header-transparent', entry.isIntersecting)
+      document.body.classList.toggle('scrolled', !entry.isIntersecting)
+    })
+
+    observer.observe(intercept)
+
+    const animateInClasses = ['animate-in', 'slide-in-from-top-5', 'fade-in', 'duration-300']
+    const animateOutClasses = ['animate-out', 'slide-out-to-top-5', 'fade-out', 'duration-300']
+
+    modalButton?.addEventListener('click', () => {
+      if (modalButton.classList.contains('active')) {
+        // close modal
+        modalButton.classList.remove('active')
+        modalButton.setAttribute('aria-expanded', 'false')
+        modalButton.setAttribute('aria-label', modalButton.dataset.labelOpen!)
+        modal?.classList.add(...animateOutClasses)
+
+        // reset header styles
+        header.classList.add(
+          document.body.classList.contains('scrolled') ? 'header-scrolled' : 'header-transparent',
+        )
+
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+          modal?.classList.add('hidden')
+          modal?.classList.remove(...animateOutClasses)
+        }, 300)
+
+        // enable page scrolling
+        document.body.style.overflow = 'auto'
+      } else {
+        modal?.style.setProperty('top', `${header.clientHeight}px`)
+        modal?.style.setProperty('height', `${window.innerHeight - header.clientHeight}px`)
+
+        // open modal
+        modalButton.classList.add('active')
+        modalButton.setAttribute('aria-expanded', 'true')
+        modalButton.setAttribute('aria-label', modalButton.dataset.labelClose!)
+        modal?.classList.remove('hidden')
+        modal?.classList.add(...animateInClasses)
+
+        // set header styles
+        header.classList.remove('header-transparent')
+        header.classList.add(
+          document.body.classList.contains('scrolled') ? 'header-scrolled' : 'header-solid',
+        )
+
+        // Remove animation classes after animation completes
+        setTimeout(() => {
+          modal?.classList.remove(...animateInClasses)
+        }, 300)
+
+        // disable page scrolling
+        document.body.style.overflow = 'hidden'
+      }
+    })
+  }
+
+  // Run setup function on the initial and any subsequent page loads due to navigation
+  // https://docs.astro.build/en/guides/view-transitions/#astropage-load
+  document.addEventListener('astro:page-load', setupHeader)
+</script>

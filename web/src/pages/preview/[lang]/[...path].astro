@@ -1,0 +1,21 @@
+---
+import { getPageProps } from '@/cms/getPageProps'
+import { locales } from '@/cms/locales'
+import type { Locale } from '@/cms/types'
+import CollectionLayout from '@/layout/collections/CollectionLayout.astro'
+
+// Preview mode, dont prerender these routes at build time
+export const prerender = false
+
+const { lang, path } = Astro.params
+
+if (!locales.includes(lang!)) {
+  return Astro.redirect(Astro.url.pathname, 404)
+}
+const locale = lang as Locale
+const fullPath = `/${locale}${path ? '/' : ''}${path ?? ''}`
+
+const pageProps = await getPageProps(fullPath)
+---
+
+<CollectionLayout pageProps={pageProps} preview={true} locale={locale} />

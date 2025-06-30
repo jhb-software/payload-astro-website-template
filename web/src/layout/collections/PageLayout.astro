@@ -1,0 +1,29 @@
+---
+import { globalState } from '@/globalState'
+import { organizationSchema } from '@/schema/organization'
+import { pageSchema } from '@/schema/page'
+import { Schema } from 'astro-seo-schema'
+import type { Page } from 'cms/src/payload-types'
+import Section from '../../components/Section.astro'
+import HeroSection from '../../layout/HeroSection.astro'
+
+type Props = {
+  page: Page
+}
+
+const { page: pageData } = Astro.props
+const { locale } = globalState
+const isRootPage = 'isRootPage' in pageData && Boolean(pageData.isRootPage)
+
+const schema = isRootPage ? organizationSchema() : pageSchema(pageData, locale)
+---
+
+<HeroSection {...pageData.hero} breadcrumbs={pageData.breadcrumbs} />
+
+{
+  pageData.sections?.map((section, index) => (
+    <Section {...section} withoutTopSpace={index === 0 && !pageData.isRootPage} />
+  ))
+}
+
+<Schema item={schema} />

@@ -1,0 +1,48 @@
+---
+import Link from '@/components/Link.astro'
+import { globalState, initGlobalState } from '@/globalState'
+import Layout from '@/layout/Layout.astro'
+import { VERCEL_ENV } from 'astro:env/server'
+import { House } from 'lucide-astro'
+
+await initGlobalState(Astro)
+const { labels, locale, preview } = globalState
+
+const homePageUrl = preview ? `/preview` : `/`
+const isProductionDeployment = VERCEL_ENV === 'production'
+---
+
+<Layout
+  meta={{
+    title: labels['not-found-page'].title,
+    description: labels['not-found-page'].description,
+    alternatePaths: [],
+  }}
+  lang={locale}
+>
+  <section class="boxed flex flex-col items-center gap-5 py-48 text-center">
+    <h1 class="text-3xl font-bold">{labels['not-found-page'].title}</h1>
+    <p>{labels['not-found-page'].description}</p>
+
+    <Link path={homePageUrl}  normalizePath={false}>
+      {labels['not-found-page']['home-page-button']}
+      <House />
+    </Link>
+  </section>
+
+  {
+    !preview && isProductionDeployment && (
+      <script is:inline>
+        document.addEventListener('DOMContentLoaded', function () { 
+          plausible('404', { 
+            props: { 
+              path: document.location.pathname,
+              userAgent: navigator.userAgent,
+              referrer: document.referrer,
+            } 
+          }); 
+        });
+      </script>
+    )
+  }
+</Layout>

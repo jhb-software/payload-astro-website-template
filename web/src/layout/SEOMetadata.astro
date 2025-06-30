@@ -1,0 +1,52 @@
+---
+import { getFileSize } from '@/components/Img.astro'
+import { websiteConfig } from '@/config'
+import { globalState } from '@/globalState'
+import { WEBSITE_URL } from 'astro:env/client'
+import type { SeoMetadata } from 'cms/src/payload-types'
+
+type Props = SeoMetadata
+
+const meta = Astro.props
+const { locale } = globalState
+
+const canonicalUrl = new URL(Astro.url.pathname, WEBSITE_URL)
+
+const ogImageUrl =
+  'image' in meta && typeof meta.image === 'object' && meta.image?.url
+    ? getFileSize('og', meta.image).url
+    : websiteConfig.ogImage.url(locale)
+---
+
+<title>{meta.title}</title>
+<meta name="description" content={meta.description} />
+
+<link rel="canonical" href={canonicalUrl} />
+
+{
+  meta.alternatePaths.map((alternatePath) => (
+    <link
+      rel="alternate"
+      href={`${WEBSITE_URL}${alternatePath.path}`}
+      hreflang={alternatePath.hreflang}
+    />
+  ))
+}
+
+<!-- Open Graph Website related -->
+<meta property="og:site_name" content={websiteConfig.name} />
+
+<!-- Open Graph Page related -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={meta.title} />
+<meta property="og:description" content={meta.description} />
+<meta property="og:locale" content={locale} />
+<meta property="og:image" content={ogImageUrl} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={meta.title} />
+<meta property="twitter:description" content={meta.description} />
+<meta property="twitter:image" content={ogImageUrl} />

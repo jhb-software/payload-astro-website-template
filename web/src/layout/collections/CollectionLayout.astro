@@ -1,0 +1,49 @@
+---
+import { getPageData } from '@/cms/getPageData'
+import type { Locale } from '@/cms/types'
+import LivePreviewRefreshPageScript from '@/components/LivePreviewRefreshPageScript.astro'
+import PreviewAdminToolbar from '@/components/PreviewAdminToolbar.astro'
+import type { PageProps } from 'cms/src/endpoints/pageProps'
+import type { Author, Page, Post } from 'cms/src/payload-types'
+import Layout from '../Layout.astro'
+import AuthorLayout from './AuthorLayout.astro'
+import PageLayout from './PageLayout.astro'
+import PostLayout from './PostLayout.astro'
+
+type Props = {
+  pageProps: PageProps
+  locale: Locale
+  preview?: boolean
+}
+
+const { pageProps, locale, preview } = Astro.props
+
+const pageData = await getPageData<Page | Post | Author>(
+  pageProps.collection,
+  pageProps.id,
+  locale,
+  {
+    preview,
+  },
+)
+---
+
+<Layout lang={locale!} meta={pageData.meta}>
+  {preview && <LivePreviewRefreshPageScript />}
+  {preview && <PreviewAdminToolbar pageProps={pageProps} />}
+
+  {
+    () => {
+      switch (pageProps.collection) {
+        case 'pages':
+          return <PageLayout page={pageData as Page} />
+        case 'posts':
+          return <PostLayout post={pageData as Post} breadcrumbs={pageData.breadcrumbs} />
+        case 'authors':
+          return <AuthorLayout author={pageData as Author} breadcrumbs={pageData.breadcrumbs} />
+        default:
+          throw new Error(`Collection ${pageProps.collection} has no layout yet.`)
+      }
+    }
+  }
+</Layout>

@@ -1,0 +1,25 @@
+---
+import type { Page } from 'cms/src/payload-types'
+import SectionShell from '../layout/SectionShell.astro'
+import SectionBlock from './SectionBlock.astro'
+
+export type Props = NonNullable<Page['sections']>[number] & { withoutTopSpace?: boolean }
+
+const { title, subTitle, blocks, highlightBackground, withoutTopSpace = false } = Astro.props
+---
+
+<SectionShell
+  class:list={[withoutTopSpace ? 'mb-16 space-y-6 py-16' : 'my-16 space-y-6 py-16']}
+  sectionClass={highlightBackground ? 'bg-gray-200/20' : undefined}
+>
+  {
+    (title || subTitle) && (
+      <div class="space-y-2">
+        {title && <h2 class="text-center text-2xl font-bold">{title}</h2>}
+        {subTitle && <p class="text-center text-balance">{subTitle}</p>}
+      </div>
+    )
+  }
+
+  {blocks?.map((block) => <SectionBlock {...block} />)}
+</SectionShell>

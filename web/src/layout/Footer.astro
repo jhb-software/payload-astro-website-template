@@ -1,0 +1,28 @@
+---
+import { websiteConfig } from '@/config'
+import { globalState } from '@/globalState'
+import type { Page } from 'cms/src/payload-types'
+import Link from '../components/Link.astro'
+
+const { footer } = globalState
+---
+
+<footer
+  class:list={[
+    'bg-white-100 z-40 flex w-full flex-col items-center justify-between border-t border-gray-300 bg-white p-2 px-12 md:flex-row',
+  ]}
+>
+  <p class="font-semibold">{websiteConfig.name} © {new Date().getFullYear()}</p>
+
+  <nav>
+    <ul class="flex list-none gap-4">
+      {
+        footer.links?.map((link) => (
+          <li>
+            <Link path={(link.page as Page)?.path}>{link.label}</Link>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</footer>

@@ -1,0 +1,30 @@
+---
+import type { 
+  Page, 
+  RichTextBlock as RichTextBlockType, 
+  BlogPostsBlock as BlogPostsBlockType,
+  AuthorsBlock as AuthorsBlockType 
+} from 'cms/src/payload-types'
+import RichTextBlock from './blocks/RichTextBlock/RichTextBlock.astro'
+import BlogPostsBlock from './blocks/BlogPostsBlock.astro'
+import AuthorsBlock from './blocks/AuthorsBlock.astro'
+
+export type Props = NonNullable<NonNullable<Page['sections']>[number]['blocks']>[number]
+
+const { blockType, ...props } = Astro.props
+---
+
+{
+  () => {
+    switch (blockType) {
+      case 'rich-text':
+        return <RichTextBlock {...(props as RichTextBlockType)} />
+      case 'blog-posts':
+        return <BlogPostsBlock {...(props as BlogPostsBlockType)} />
+      case 'authors':
+        return <AuthorsBlock {...(props as AuthorsBlockType)} />
+      default:
+        throw new Error('Block type not implemented: ' + blockType)
+    }
+  }
+}

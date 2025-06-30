@@ -1,0 +1,94 @@
+---
+import { VERCEL_ENV } from 'astro:env/server'
+import type { Media } from 'cms/src/payload-types'
+import type { ValueOf } from 'ts-essentials'
+
+type ImageSize = keyof NonNullable<Media['sizes']> | 'original'
+type RawFileSize = ValueOf<Media['sizes']>
+type ValidatedFileSize = {
+  fileName: string
+  url: string
+  width: number | undefined
+  height: number | undefined
+}
+
+type Props = {
+  image: Media
+  size?: ImageSize
+  class?: string
+  fetchpriority?: 'high' | 'low' | 'auto'
+  loading?: 'eager' | 'lazy'
+
+  // custom width and height:
+  width?: number
+  height?: number
+}
+
+const { image, size = 'md', class: className, fetchpriority, loading, width, height } = Astro.props
+
+if (!image.filename) {
+  throw new Error('Image filename is required, got: ' + JSON.stringify(image))
+} else if (!image.mimeType?.startsWith('image/')) {
+  throw new Error(
+    'Image mime type is required and must start with "image/", got: ' + JSON.stringify(image),
+  )
+}
+
+/** Converts a raw file size from the CMS to a validate file size or returns undefined if the file size is not valid */
+export function validateFileSize(size: RawFileSize): ValidatedFileSize | undefined {
+  if (!size?.url || !size?.filename) {
+    return undefined
+  }
+
+  return {
+    fileName: size.filename,
+    url: size.url,
+    width: size.width ?? undefined,
+    height: size.height ?? undefined,
+  }
+}
+
+/** Returns the validated file size for the given image and size */
+export function getFileSize(size: ImageSize, image: Media): ValidatedFileSize {
+  // fall back to the original file size
+  let fileSize: ValidatedFileSize | undefined = validateFileSize(image)
+
+  // pick a specific file size
+  if (size !== 'original') {
+    fileSize = validateFileSize(image.sizes?.[size])
+
+    // If the specified file size is unavailable or invalid, default to the original file size.
+    // This is necessary because larger file sizes may not exist for some images (e.g., an original image with a width of 534px might only have an 'xs' size of 480px).
+    if (!fileSize) {
+      if (VERCEL_ENV !== 'production') {
+        console.warn(
+          `File size ${size} not found in image: {id: ${image.id}, filename: ${image.filename}}. Falling back to original file.`,
+        )
+      }
+
+      fileSize = validateFileSize(image)
+    }
+  }
+
+  // if the file size is not valid, fall back to the original file size
+  if (!fileSize) {
+    throw new Error(
+      `File size ${size} not found in image: {id: ${image.id}, filename: ${image.filename}}`,
+    )
+  }
+
+  return fileSize
+}
+
+const fileSize = getFileSize(size, image)
+---
+
+<img
+  src={fileSize.url}
+  alt={image.alt}
+  class={className}
+  fetchpriority={fetchpriority}
+  loading={loading}
+  width={width ?? fileSize.width}
+  height={height ?? fileSize.height}
+/>

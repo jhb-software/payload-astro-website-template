@@ -1,0 +1,34 @@
+---
+// This script ensures that when the live preview is active and the preview page is shown inside an iframe in the CMS,
+// the page is reloaded whenever a document is saved.
+
+// In the future, we could also update the page data (such as text fields) without reloading the page. For this script to also receive
+// the updated data in real time, we first have to send a 'ready' message to the payload server.
+// Like:
+// window.parent?.postMessage(
+//   {
+//     type: 'payload-live-preview',
+//     ready: true,
+//   },
+//   serverURL,
+// )
+---
+
+<script is:inline>
+  window.addEventListener(
+    'message',
+    (event) => {
+      console.log('Message received:', {
+        data: event.data,
+        origin: event.origin,
+        source: event.source,
+      })
+
+      if (event.data.type === 'payload-document-event') {
+        // reload the page whenever a document is saved to get the latest data
+        location.reload()
+      }
+    },
+    false, // Add false to ensure event bubbles up through iframes
+  )
+</script>

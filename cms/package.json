@@ -1,0 +1,51 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "description": "JHB Payload Astro Website Template - CMS",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "format": "prettier --write src"
+  },
+  "dependencies": {
+    "@jhb.software/payload-pages-plugin": "^0.5.0",
+    "@joneslloyd/payload-storage-hetzner": "^3.42.3",
+    "@payloadcms/db-mongodb": "^3.44.0",
+    "@payloadcms/email-resend": "^3.44.0",
+    "@payloadcms/next": "^3.44.0",
+    "@payloadcms/plugin-cloud-storage": "^3.44.0",
+    "@payloadcms/plugin-seo": "^3.44.0",
+    "@payloadcms/richtext-lexical": "^3.44.0",
+    "@payloadcms/translations": "^3.44.0",
+    "@payloadcms/ui": "^3.44.0",
+    "cross-env": "^7.0.3",
+    "graphql": "^16.11.0",
+    "next": "15.3.4",
+    "payload": "^3.44.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "sharp": "^0.34.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@types/node": "^24.0.7",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
+    "eslint": "^9.30.0",
+    "eslint-config-next": "15.3.4",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "typescript": "5.8.3"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0"
+  }
+}

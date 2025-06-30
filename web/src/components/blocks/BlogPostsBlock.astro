@@ -1,0 +1,61 @@
+---
+import Img from '@/components/Img.astro'
+import Link from '@/components/Link.astro'
+import { globalState } from '@/globalState'
+import type { Author, BlogPostsBlock, Media, Post } from 'cms/src/payload-types'
+
+type Props = BlogPostsBlock
+
+const { posts } = Astro.props
+
+const { locale } = globalState
+
+// Get the populated posts data
+const postsData = posts as Post[]
+---
+
+<div class="flex flex-col gap-6">
+  {
+    postsData.map((post) => (
+      <article class="rounded-lg border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+        <Link path={post.path} class="block">
+          <Img image={post.image as Media} size="md" class="h-48 w-full object-cover" />
+
+          <div class="w-full p-6">
+            <h3 class="mb-2 line-clamp-2 text-xl font-semibold text-slate-800">{post.title}</h3>
+
+            <p class="mb-4 line-clamp-3 text-sm text-slate-600">{post.excerpt}</p>
+
+            <div class="flex items-center justify-between gap-4 text-sm text-slate-500">
+              <div class="flex items-center space-x-2">
+                {(post.authors as Author[]).slice(0, 2).map((author, index) => (
+                  <span>
+                    {index > 0 && ', '}
+                    {author.name}
+                  </span>
+                ))}
+                {post.authors.length > 2 && <span>+{post.authors.length - 2} more</span>}
+              </div>
+
+              <time datetime={post.updatedAt}>
+                {new Date(post.updatedAt).toLocaleDateString(locale, {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </time>
+            </div>
+          </div>
+        </Link>
+      </article>
+    ))
+  }
+</div>
+
+{
+  postsData.length === 0 && (
+    <div class="py-12 text-center">
+      <p class="text-slate-500">No blog posts available.</p>
+    </div>
+  )
+}

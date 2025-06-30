@@ -1,0 +1,48 @@
+---
+import Img from '@/components/Img.astro'
+import Link from '@/components/Link.astro'
+import type { Author, AuthorsBlock, Media } from 'cms/src/payload-types'
+
+type Props = AuthorsBlock
+
+const { authors } = Astro.props
+
+// Get the populated authors data
+const authorsData = authors as Author[]
+---
+
+<div class="w-full">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    {
+      authorsData.map((author) => (
+        <article class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+          <Link path={author.path} class="block">
+            <div class="p-6 text-center">
+              <div class="mb-4">
+                <Img
+                  image={author.photo as Media}
+                  size="sm"
+                  class="mx-auto h-20 w-20 rounded-full object-cover"
+                />
+              </div>
+
+              <h3 class="mb-1 text-lg font-semibold text-slate-800">{author.name}</h3>
+
+              <p class="mb-3 text-sm text-slate-500">{author.profession}</p>
+
+              <p class="line-clamp-3 text-sm text-slate-600">{author.excerpt}</p>
+            </div>
+          </Link>
+        </article>
+      ))
+    }
+  </div>
+
+  {
+    authorsData.length === 0 && (
+      <div class="py-12 text-center">
+        <p class="text-slate-500">No authors available.</p>
+      </div>
+    )
+  }
+</div>

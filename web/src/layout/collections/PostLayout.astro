@@ -1,0 +1,91 @@
+---
+import RichTextBlock from '@/components/blocks/RichTextBlock/RichTextBlock.astro'
+import BreadcrumbsBlock from '@/components/Breadcrumbs.astro'
+import Img from '@/components/Img.astro'
+import { globalState } from '@/globalState'
+import SectionShell from '@/layout/SectionShell.astro'
+import { postSchema } from '@/schema/post'
+import { normalizePath } from '@/utils/normalizePath'
+import { Schema } from 'astro-seo-schema'
+import type { Author, Breadcrumbs, Media, Post } from 'cms/src/payload-types'
+
+type Props = {
+  post: Post
+  breadcrumbs: Breadcrumbs
+}
+
+const { post, breadcrumbs } = Astro.props
+const { locale, preview, labels } = globalState
+
+const schema = postSchema(post, locale)
+---
+
+<SectionShell>
+  {breadcrumbs && <BreadcrumbsBlock breadcrumbs={breadcrumbs} />}
+  <h1 class="mt-4 text-center text-4xl font-extrabold text-balance text-slate-700">
+    {post.title}
+  </h1>
+
+  <div class="mt-4 mb-12 flex flex-row items-center justify-center gap-4">
+    <div class="flex flex-shrink-0 -space-x-6">
+      {
+        (post.authors as Author[]).map((author) => (
+          <div class="h-16 w-16 flex-shrink-0">
+            <a href={normalizePath(author.path, preview)}>
+              <Img
+                image={(author as Author).photo as Media}
+                size="sm"
+                class="inline-block aspect-square !h-16 !w-16 rounded-full ring-2 ring-white"
+              />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="flex flex-col items-start gap-1 text-sm text-slate-700">
+      <p>
+        {labels.posts['written-by']}{'  '}
+        {
+          (post.authors as Author[]).map((author, index) => (
+            <>
+              {index > 0 && (index === post.authors.length - 1 ? ' & ' : ', ')}
+              <a
+                class="text-primary inline-block text-nowrap underline"
+                href={normalizePath(author.path, preview)}
+              >
+                {author.name}
+              </a>
+            </>
+          ))
+        }
+      </p>
+
+      <p>
+        {labels.posts['last-updated-at']}{'  '}
+        {
+          new Date(post.updatedAt).toLocaleDateString(locale, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })
+        }
+      </p>
+    </div>
+  </div>
+
+  <Img
+    image={post.image as Media}
+    size="xl"
+    class="mx-auto my-8 w-full max-w-4xl rounded-xl"
+    fetchpriority="high"
+  />
+
+  <div class="relative flex gap-8">
+    <div class="min-w-0 flex-1">
+      <RichTextBlock text={post.content} />
+    </div>
+  </div>
+</SectionShell>
+
+<Schema item={schema} />

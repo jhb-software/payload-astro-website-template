@@ -1,0 +1,42 @@
+---
+import { breadcrumbsSchema } from '@/schema/breadcrumbs'
+import { Schema } from 'astro-seo-schema'
+import type { Breadcrumbs } from 'cms/src/payload-types'
+import Link from './Link.astro'
+
+type Props = {
+  breadcrumbs: Breadcrumbs
+}
+
+const { breadcrumbs } = Astro.props
+
+const schema = breadcrumbsSchema(breadcrumbs)
+---
+
+<nav aria-label="breadcrumbs">
+  <ol class:list={['flex flex-row items-center justify-center gap-2 text-sm text-slate-500']}>
+    {
+      breadcrumbs
+        .map(({ label, path }, index, array) => (
+          <li>
+            <Link
+              path={path}
+              class="!py-2 text-sm !font-medium text-slate-500 uppercase"
+              aria-current={index + 1 === array.length ? 'location' : false}
+            >
+              {label}
+            </Link>
+          </li>
+        ))
+        .reduce((prev, curr) => [
+          prev,
+          <span aria-hidden class="text-secondary">
+            /
+          </span>,
+          curr,
+        ])
+    }
+  </ol>
+</nav>
+
+<Schema item={schema} />
