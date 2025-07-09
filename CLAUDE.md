@@ -1,6 +1,6 @@
 # Repository Overview
 
-This is a mono-repository for the JHB Software company website consisting of:
+This is a mono-repository for multi-language content-driven websites consisting of:
 
 - **CMS** (`/cms`): Payload CMS with Next.js for content management
 - **Frontend** (`/web`): Astro-based multi-language static site, styled with Tailwind CSS
@@ -43,17 +43,17 @@ The CMS uses Payload v3 with a modular collection and block system:
 
 - **Collections** (`/cms/src/collections/`): Define content types in plural (e.g. `Articles.ts`, `Authors.ts`, `Projects.ts`, etc.)
 - **Blocks** (`/cms/src/blocks/`): Reusable content blocks that map to frontend block components. Suffix: `Block` (e.g. `AuthorsListBlock.ts`)
-- **Globals** (`/cms/src/globals/`): Site-wide settings (Header, Footer, Labels)
+- **Globals** (`/cms/src/globals/`): Global documents containing site-wide settings (e.g. `Header`, `Footer`, `Labels`)
 - **Plugins** (`/cms/src/plugins/`): Custom plugins (e.g. `cms-content-translator`, `jhb-dashboard`)
 - **Endpoints** (`/cms/src/endpoints/`): Custom HTTP API-endpoints
 - **Fields** (`/cms/src/fields/`): Reusable fields (e.g. `heroSection` field for the `pages` collection)
 
-Key architectural decisions:
+Key architectural patterns:
 
-- Lexical rich text editor for content editing
-- Draft/publish workflow with versioning
-- AI-powered translation and alt text generation via OpenAI
-- Custom dashboard plugin for enhanced CMS experience
+- Modular collection and block system
+- Multi-language support with automatic path generation
+- Live preview for content editing
+- Custom HTTP API-endpoints for the frontend (e.g. `sitemap.ts` or `staticPages.ts`)
 
 ### Frontend Architecture
 
@@ -62,19 +62,17 @@ The frontend uses Astro's static site generation with dynamic CMS integration:
 - **CMS**: (`/web/src/cms/`): Utility functions for fetching data from the CMS
 - **Components**: (`/web/src/components/`): Reusable .astro components
   - **Blocks**: (`/web/src/components/blocks/`): .astro components for CMS blocks (following the same naming convention as the CMS blocks)
-  - **Icons**: (`/web/src/components/icons/`): .svg or .astro components for icons
-  - **Cards**: (`/web/src/components/cards/`): Cards for collection types
-- **Layout**: (`/web/src/layout/`): Layout components like `HeroSection.astro`, `Footer.astro` or `PageLayout.astro`
+- **Layout**: (`/web/src/layout/`): Layout components like `HeroSection.astro`, `Footer.astro` or `Layout.astro`
 
-  - **collections**: (`/web/src/layout/collections/`): Layout components for collection types (e.g. `ArticleLayout.astro`)
+  - **collections**: (`/web/src/layout/collections/`): Layout components for collection types (e.g. `PageLayout.astro`, `PostLayout.astro`)
 
 - **Pages**: (`/web/src/pages/`): Dynamic routing (e.g. `[lang]/[...path].astro`)
-- **Schema**: (`/web/src/schema/`): Structured data schemas for SEO
+- **Schema**: (`/web/src/schema/`): Structured data schemas for each collection type for SEO
 
 Key architectural patterns:
 
 - Static site generation with Astro
-- SSR only for `/preview` pages
+- SSR only for `/preview` path for live preview
 - Progressive enhancement with minimal client-side JavaScript
 - Type-safe CMS data integration using generated types
 - Tailwind CSS v4 for styling with custom design tokens
@@ -100,8 +98,8 @@ Key architectural patterns:
 
 Both packages require environment configuration:
 
-- CMS: Database URL, storage credentials, API keys
-- Web: CMS API URL, deployment settings
+- CMS: Database URL, storage credentials, API keys, etc.
+- Web: CMS API URL, deployment settings, etc.
 
 ### TypeScript
 
