@@ -25,7 +25,6 @@ import { getStatisPagesProps } from './endpoints/staticPages'
 import Footer from './globals/Footer'
 import Header from './globals/Header'
 import Labels from './globals/Labels'
-import { seedCMS } from './seed'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -153,7 +152,7 @@ export default buildConfig({
     }),
   ],
   onInit: async (payload) => {
-    // Uncomment this to seed the CMS with default data
-    await seedCMS(payload)
+    // Uncomment the following line to seed the CMS with default data
+    // await seedCMS(payload)
   },
 })
