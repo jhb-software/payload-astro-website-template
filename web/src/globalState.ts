@@ -1,7 +1,7 @@
 import type { AstroGlobal } from 'astro'
 import type { Footer, Header, Labels } from 'cms/src/payload-types'
 import { getLabels } from './cms/getLabels'
-import { payloadSDK } from './cms/getRedirects'
+import { payloadSDK } from './cms/sdk'
 import type { Locale } from './cms/types'
 import { defaultLocale } from './cms/locales'
 import { localeFromHeader } from './utils/localeFromHeader'
