@@ -8,7 +8,7 @@ import { House } from 'lucide-astro'
 await initGlobalState(Astro)
 const { labels, locale, preview } = globalState
 
-const homePageUrl = preview ? `/preview` : `/`
+const homePagePath = preview ? `/preview` : `/`
 const isProductionDeployment = VERCEL_ENV === 'production'
 ---
 
@@ -24,7 +24,7 @@ const isProductionDeployment = VERCEL_ENV === 'production'
     <h1 class="text-3xl font-bold">{labels['not-found-page'].title}</h1>
     <p>{labels['not-found-page'].description}</p>
 
-    <Link path={homePageUrl}  normalizePath={false}>
+    <Link path={homePagePath}  normalizePath={false}>
       {labels['not-found-page']['home-page-button']}
       <House />
     </Link>
