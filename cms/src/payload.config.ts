@@ -86,7 +86,10 @@ export default buildConfig({
   collections: collections,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
-  csrf: ['https://cms.your-website.com'],
+  csrf:
+    process.env.NODE_ENV === 'production'
+      ? ['https://cms.your-website.com']
+      : ['http://localhost:3000'],
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
