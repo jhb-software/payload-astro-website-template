@@ -8,8 +8,10 @@ export const BlogPostsBlock: Block = {
     plural: 'Blog Posts Blocks',
   },
   fields: [
+    // TODO: add onlyFeatured and limit field
     {
-      // This virtual field makes the data directly available to the frontend when a document with the block is fetched
+      // This field is virtual in order to avoid manually selecting which blog posts to show.
+      // It makes the data directly available to the frontend when a document with the block is fetched.
       name: 'posts',
       type: 'relationship',
       relationTo: 'posts',

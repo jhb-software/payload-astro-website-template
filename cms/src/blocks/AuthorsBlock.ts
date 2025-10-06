@@ -8,8 +8,10 @@ export const AuthorsBlock: Block = {
     plural: 'Authors Blocks',
   },
   fields: [
+    // TODO: add onlyFeatured and limit field
     {
-      // This virtual field makes the data directly available to the frontend when a document with the block is fetched
+      // This field is virtual in order to avoid manually selecting which authors to show.
+      // It makes the data directly available to the frontend when a document with the block is fetched.
       name: 'authors',
       type: 'relationship',
       relationTo: 'authors',
