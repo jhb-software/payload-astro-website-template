@@ -19,11 +19,14 @@ export async function getGlobalData({
   locale: Locale
   preview: boolean
 }): Promise<GlobalData> {
-  // TODO: add cache once the new cached payload SDK is used
-
   const response = await payloadSDK.request({
     method: 'GET',
     path: `/global-data?locale=${locale}&preview=${preview}`,
+    init: {
+      headers: {
+        'X-Use-Cache': preview ? 'false' : 'true',
+      },
+    },
   })
 
   if (!response.ok) {

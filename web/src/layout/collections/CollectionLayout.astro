@@ -18,14 +18,9 @@ type Props = {
 
 const { pageProps, locale, preview } = Astro.props
 
-const pageData = await getPageData<Page | Post | Author>(
-  pageProps.collection,
-  pageProps.id,
-  locale,
-  {
-    preview,
-  },
-)
+const pageData = await getPageData(pageProps.collection, pageProps.id, locale, {
+  preview,
+})
 ---
 
 <Layout lang={locale!} meta={pageData.meta}>

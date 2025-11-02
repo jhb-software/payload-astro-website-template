@@ -8,3 +8,8 @@ interface CmsCache {
 export const cache: CmsCache = {
   apiRequests: new Map(),
 }
+
+/** Clear all cached API requests */
+export function clearCache(): void {
+  cache.apiRequests.clear()
+}

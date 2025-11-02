@@ -1,7 +1,7 @@
+import { PayloadSDK } from '@payloadcms/sdk'
 import type { RedirectConfig } from 'astro'
 import type { Config } from 'cms/src/payload-types'
 import 'dotenv/config'
-import { PayloadSDK } from './sdk/sdk'
 
 /** Fetches the redirects from the CMS and converts them to the Astro `RedirectConfig` format. */
 export async function getRedirects(): Promise<Record<string, RedirectConfig>> {
@@ -11,14 +11,11 @@ export async function getRedirects(): Promise<Record<string, RedirectConfig>> {
     baseURL: process.env.CMS_URL! + '/api',
   })
 
-  const redirectsCms = await payloadSDK.find(
-    {
-      collection: 'redirects',
-      limit: 0, // query all
-      pagination: false,
-    },
-    false, // do not use cache
-  )
+  const redirectsCms = await payloadSDK.find({
+    collection: 'redirects',
+    limit: 0, // query all
+    pagination: false,
+  })
 
   const redirects = redirectsCms.docs.reduce<Record<string, RedirectConfig>>((acc, doc) => {
     acc[doc.sourcePath] = {

@@ -1,17 +1,15 @@
 import type { CollectionSlug } from 'payload'
 import { payloadSDK } from './sdk'
-import type { Locale } from './types'
+import type { Locale, PageData } from './types'
 
-/** Fetches a single page document from the CMS. */
-export async function getPageData<T>(
+export async function getPageData(
   collection: CollectionSlug,
   id: string,
   locale: Locale,
   options?: { preview?: boolean },
-): Promise<T> {
+): Promise<PageData> {
   const result = await payloadSDK.find(
     {
-      // @ts-expect-error - collection is not typed
       collection: collection,
       locale,
       draft: options?.preview ? true : false,
@@ -24,12 +22,16 @@ export async function getPageData<T>(
       limit: 1,
       pagination: false,
     },
-    !options?.preview, // use cache if not in preview mode
+    {
+      headers: {
+        'X-Use-Cache': options?.preview ? 'false' : 'true',
+      },
+    },
   )
 
   if (result.totalDocs === 0) {
     throw new Error('Page for collection ' + collection + ' with id ' + id + ' not found')
   }
 
-  return result.docs.at(0) as T
+  return result.docs.at(0) as unknown as PageData
 }

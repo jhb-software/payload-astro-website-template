@@ -1,6 +1,6 @@
-import { CMS_URL } from 'astro:env/server'
 import type { PageProps } from 'cms/src/endpoints/pageProps'
 import type { StaticPageProps } from 'cms/src/endpoints/staticPages'
+import { payloadSDK } from './sdk'
 
 export type StaticPagePropsFrontend = {
   params: {
@@ -10,9 +10,16 @@ export type StaticPagePropsFrontend = {
   props: PageProps
 }
 
-/** Fetches the static paths from the CMS. */
 export async function getStaticPaths(): Promise<StaticPagePropsFrontend[]> {
-  const response = await fetch(`${CMS_URL}/api/static-paths`)
+  const response = await payloadSDK.request({
+    method: 'GET',
+    path: '/static-paths',
+    init: {
+      headers: {
+        'X-Use-Cache': 'true',
+      },
+    },
+  })
   const data = await response.json()
 
   if (!response.ok) {
