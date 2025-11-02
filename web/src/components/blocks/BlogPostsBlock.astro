@@ -1,14 +1,14 @@
 ---
 import Img from '@/components/Img.astro'
 import Link from '@/components/Link.astro'
-import { globalState } from '@/globalState'
+
 import type { Author, BlogPostsBlock, Media, Post } from 'cms/src/payload-types'
 
 type Props = BlogPostsBlock
 
 const { posts } = Astro.props
 
-const { locale } = globalState
+const { locale } = Astro.locals.globalState
 
 // Get the populated posts data
 const postsData = posts as Post[]

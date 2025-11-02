@@ -1,5 +1,5 @@
 ---
-import { globalState } from '@/globalState'
+
 import { normalizePath } from '../utils/normalizePath'
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   normalizePath?: boolean
 }
 
-const { preview } = globalState
+const { preview } = Astro.locals.globalState
 
 const { path, class: className, normalizePath: normalizePathValue = true } = Astro.props
 const href = normalizePathValue ? normalizePath(path, preview) : path

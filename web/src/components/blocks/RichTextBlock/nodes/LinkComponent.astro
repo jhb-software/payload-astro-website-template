@@ -1,5 +1,5 @@
 ---
-import { globalState } from '@/globalState'
+
 import { normalizePath } from '@/utils/normalizePath'
 import RichTextLexical from '../RichTextLexical.astro'
 import type { LinkNode, TextNode } from '../types'
@@ -9,7 +9,7 @@ type Props = {
 }
 
 const { node } = Astro.props
-const { preview } = globalState
+const { preview } = Astro.locals.globalState
 
 function createLinkElement(node: LinkNode) {
   let href = ''

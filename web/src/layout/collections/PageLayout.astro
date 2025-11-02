@@ -1,5 +1,5 @@
 ---
-import { globalState } from '@/globalState'
+
 import { organizationSchema } from '@/schema/organization'
 import { pageSchema } from '@/schema/page'
 import { Schema } from 'astro-seo-schema'
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const { page: pageData } = Astro.props
-const { locale } = globalState
+const { locale } = Astro.locals.globalState
 const isRootPage = 'isRootPage' in pageData && Boolean(pageData.isRootPage)
 
 const schema = isRootPage ? organizationSchema() : pageSchema(pageData, locale)

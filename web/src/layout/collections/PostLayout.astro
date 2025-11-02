@@ -2,7 +2,7 @@
 import RichTextBlock from '@/components/blocks/RichTextBlock/RichTextBlock.astro'
 import BreadcrumbsBlock from '@/components/Breadcrumbs.astro'
 import Img from '@/components/Img.astro'
-import { globalState } from '@/globalState'
+
 import SectionShell from '@/layout/SectionShell.astro'
 import { postSchema } from '@/schema/post'
 import { normalizePath } from '@/utils/normalizePath'
@@ -15,7 +15,7 @@ type Props = {
 }
 
 const { post, breadcrumbs } = Astro.props
-const { locale, preview, labels } = globalState
+const { locale, preview, labels } = Astro.locals.globalState
 
 const schema = postSchema(post, locale)
 ---

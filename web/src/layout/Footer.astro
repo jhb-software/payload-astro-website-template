@@ -1,10 +1,10 @@
 ---
 import { websiteConfig } from '@/config'
-import { globalState } from '@/globalState'
+
 import type { Page } from 'cms/src/payload-types'
 import Link from '../components/Link.astro'
 
-const { footer } = globalState
+const { footer } = Astro.locals.globalState
 ---
 
 <footer

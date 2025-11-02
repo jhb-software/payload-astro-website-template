@@ -1,12 +1,12 @@
 ---
 import Link from '@/components/Link.astro'
-import { globalState, initGlobalState } from '@/globalState'
+import { initGlobalState } from '@/globalState'
 import Layout from '@/layout/Layout.astro'
 import { VERCEL_ENV } from 'astro:env/server'
 import { House } from 'lucide-astro'
 
 await initGlobalState(Astro)
-const { labels, locale, preview } = globalState
+const { labels, locale, preview } = Astro.locals.globalState
 
 const homePagePath = preview ? `/preview` : `/`
 const isProductionDeployment = VERCEL_ENV === 'production'

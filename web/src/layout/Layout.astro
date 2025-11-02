@@ -4,7 +4,7 @@ import '@fontsource-variable/montserrat'
 import { VERCEL_ENV } from 'astro:env/server'
 import { ClientRouter } from 'astro:transitions'
 import type { SeoMetadata } from 'cms/src/payload-types'
-import { globalState, initGlobalState } from '../globalState'
+import { initGlobalState } from '../globalState'
 import '../styles.css'
 import Footer from './Footer.astro'
 import Header from './Header.astro'
@@ -18,7 +18,7 @@ type Props = {
 const { meta, lang } = Astro.props
 
 await initGlobalState(Astro)
-const { preview } = globalState
+const { preview } = Astro.locals.globalState
 
 const enablePlausible = VERCEL_ENV === 'production' && !preview
 ---
