@@ -20,7 +20,7 @@
     "astro-seo-schema": "^5.1.0",
     "cms": "workspace:*",
     "lucide-astro": "^0.544.0",
-    "payload": "^3.58.0",
+    "payload": "3.62.0",
     "qs-esm": "^7.0.2",
     "schema-dts": "^1.1.5",
     "ts-essentials": "^10.1.1"
