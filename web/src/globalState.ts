@@ -1,9 +1,8 @@
 import type { AstroGlobal } from 'astro'
 import type { Footer, Header, Labels } from 'cms/src/payload-types'
-import { getLabels } from './cms/getLabels'
-import { payloadSDK } from './cms/sdk'
-import type { Locale } from './cms/types'
+import { getGlobalData } from './cms/getGlobalData'
 import { defaultLocale } from './cms/locales'
+import type { Locale } from './cms/types'
 import { localeFromHeader } from './utils/localeFromHeader'
 import { localeFromPath } from './utils/localeFromPath'
 
@@ -25,33 +24,10 @@ export async function initGlobalState(Astro: AstroGlobal): Promise<GlobalState> 
     return Astro.locals.globalState
   }
 
-  const locale = localeFromPath(Astro.url.pathname) || localeFromHeader(Astro.request.headers) || defaultLocale
+  const locale =
+    localeFromPath(Astro.url.pathname) || localeFromHeader(Astro.request.headers) || defaultLocale
   const preview = Astro.url.pathname.startsWith('/preview')
-  const labels = await getLabels({ locale, useCache: !preview })
-  const footer = await payloadSDK.findGlobal(
-    {
-      slug: 'footer',
-      locale: locale,
-      populate: {
-        pages: {
-          path: true,
-        },
-      },
-    },
-    !preview,
-  )
-  const header = await payloadSDK.findGlobal(
-    {
-      slug: 'header',
-      locale: locale,
-      populate: {
-        pages: {
-          path: true,
-        },
-      },
-    },
-    !preview,
-  )
+  const { labels, header, footer } = await getGlobalData({ locale, preview })
 
   const globalState: GlobalState = {
     locale,

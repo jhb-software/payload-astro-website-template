@@ -19,6 +19,7 @@ import Pages from './collections/Pages'
 import Posts from './collections/Posts'
 import { Redirects } from './collections/Redirects'
 import { Users } from './collections/Users'
+import { getGlobalData } from './endpoints/globalData'
 import { getPagePropsByPath } from './endpoints/pageProps'
 import { getSitemap } from './endpoints/sitemap'
 import { getStatisPagesProps } from './endpoints/staticPages'
@@ -116,6 +117,11 @@ export default buildConfig({
       path: '/page-props',
       method: 'get',
       handler: getPagePropsByPath,
+    },
+    {
+      path: '/global-data',
+      method: 'get',
+      handler: getGlobalData,
     },
   ],
   blocks: [

@@ -5,16 +5,17 @@ import { PayloadSDK } from './sdk/sdk'
 
 /** Fetches the redirects from the CMS and converts them to the Astro `RedirectConfig` format. */
 export async function getRedirects(): Promise<Record<string, RedirectConfig>> {
-  // Because import.meta.env and astro:env is not available in config files and this method is
-  // called from the astro.config.mjs file, use process.env to access the environment variable instead.
+  // Because import.meta.env and astro:env is not available in Astro config files and this method is called from
+  // the Astro config file, use process.env to access the environment variable instead.
   const payloadSDK = new PayloadSDK<Config>({
-    baseURL: process.env.CMS_URL + '/api',
+    baseURL: process.env.CMS_URL! + '/api',
   })
 
   const redirectsCms = await payloadSDK.find(
     {
       collection: 'redirects',
       limit: 0, // query all
+      pagination: false,
     },
     false, // do not use cache
   )
