@@ -5,10 +5,9 @@ import { heroSection } from '@/fields/heroSection'
 import { anyone } from '@/shared/access/anyone'
 import { authenticated } from '@/shared/access/authenticated'
 import { CollectionGroups } from '@/shared/CollectionGroups'
-import { createPageCollectionConfig } from '@jhb.software/payload-pages-plugin'
-import { CollectionConfig } from 'payload'
+import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
 
-const Pages: CollectionConfig = createPageCollectionConfig({
+const Pages: PageCollectionConfig = {
   slug: 'pages',
   admin: {
     useAsTitle: 'title',
@@ -30,6 +29,11 @@ const Pages: CollectionConfig = createPageCollectionConfig({
       name: 'parent',
     },
     isRootCollection: true,
+  },
+  defaultPopulate: {
+    // only populate the fields that are required by the frontend (e.g. for breadcrumbs and navigation)
+    title: true,
+    path: true,
   },
   fields: [
     {
@@ -65,6 +69,6 @@ const Pages: CollectionConfig = createPageCollectionConfig({
       ],
     },
   ],
-})
+}
 
 export default Pages

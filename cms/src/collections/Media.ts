@@ -48,6 +48,7 @@ export const Media: CollectionConfig = {
     create: authenticated,
   },
   fields: [
+    // TODO: use the alt-text-plugin: https://www.npmjs.com/package/@jhb.software/payload-alt-text-plugin
     {
       name: 'alt',
       label: 'Alt Text',

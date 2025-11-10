@@ -19,7 +19,7 @@ export async function seedCMS(payload: Payload, force: boolean = false) {
             where: {},
           })
         } catch (error) {
-          payload.logger.warn(`Failed to clear collection ${collectionSlug}:`, error)
+          payload.logger.warn(`Failed to clear collection ${collectionSlug}:` + error)
         }
       }
     } else {
@@ -603,7 +603,7 @@ export async function seedCMS(payload: Payload, force: boolean = false) {
     payload.logger.info('CMS seeding completed successfully!')
     return
   } catch (error) {
-    payload.logger.error('Error seeding CMS:', error)
+    payload.logger.error('Error seeding CMS:' + error)
     throw error
   }
 }

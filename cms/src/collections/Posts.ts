@@ -2,12 +2,11 @@ import CodeBlock from '@/blocks/CodeBlock'
 import { anyone } from '@/shared/access/anyone'
 import { authenticated } from '@/shared/access/authenticated'
 import { CollectionGroups } from '@/shared/CollectionGroups'
-import { createPageCollectionConfig } from '@jhb.software/payload-pages-plugin'
+import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { BlocksFeature } from 'node_modules/@payloadcms/richtext-lexical/dist/features/blocks/server'
-import { CollectionConfig } from 'payload'
 
-const Posts: CollectionConfig = createPageCollectionConfig({
+const Posts: PageCollectionConfig = {
   slug: 'posts',
   admin: {
     useAsTitle: 'title',
@@ -29,6 +28,16 @@ const Posts: CollectionConfig = createPageCollectionConfig({
     update: authenticated,
     delete: authenticated,
     create: authenticated,
+  },
+  defaultPopulate: {
+    // only populate the fields that are required by the frontend (e.g. for post cards and list views)
+    path: true,
+    title: true,
+    excerpt: true,
+    image: true,
+    authors: true,
+    createdAt: true,
+    updatedAt: true,
   },
   fields: [
     // Sidebar fields:
@@ -77,6 +86,6 @@ const Posts: CollectionConfig = createPageCollectionConfig({
       }),
     },
   ],
-})
+}
 
 export default Posts

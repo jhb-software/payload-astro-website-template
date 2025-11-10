@@ -16,7 +16,7 @@
     "format": "prettier --write src"
   },
   "dependencies": {
-    "@jhb.software/payload-pages-plugin": "^0.5.1",
+    "@jhb.software/payload-pages-plugin": "0.6.0-beta.3",
     "@joneslloyd/payload-storage-hetzner": "^3.55.2",
     "@payloadcms/db-mongodb": "3.62.0",
     "@payloadcms/email-resend": "3.62.0",

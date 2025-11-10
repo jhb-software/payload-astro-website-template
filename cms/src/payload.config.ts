@@ -1,8 +1,4 @@
-import {
-  alternatePathsField,
-  getPageUrl,
-  payloadPagesPlugin,
-} from '@jhb.software/payload-pages-plugin'
+import { alternatePathsField, payloadPagesPlugin } from '@jhb.software/payload-pages-plugin'
 import { hetznerStorage } from '@joneslloyd/payload-storage-hetzner'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
@@ -52,6 +48,18 @@ export const pageCollectionsSlugs: CollectionSlug[] = collections
   .filter((collection) => 'page' in collection && typeof collection.page === 'object')
   .map((collection) => collection.slug as CollectionSlug)
 
+const generatePageURL = ({
+  path,
+  preview,
+}: {
+  path: string | null
+  preview: boolean
+}): string | null => {
+  return path && process.env.NEXT_PUBLIC_FRONTEND_URL
+    ? `${process.env.NEXT_PUBLIC_FRONTEND_URL}${preview ? '/preview' : ''}${path}`
+    : null
+}
+
 export default buildConfig({
   localization: {
     locales: locales.map((locale) => ({
@@ -70,10 +78,6 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: ` - ${websiteName} CMS`,
-    },
-    livePreview: {
-      collections: pageCollectionsSlugs,
-      url: ({ data }) => getPageUrl({ path: data.path, preview: true })!,
     },
     components: {
       views: {
@@ -130,11 +134,13 @@ export default buildConfig({
   ],
   sharp,
   plugins: [
-    payloadPagesPlugin({}),
+    payloadPagesPlugin({
+      generatePageURL,
+    }),
     seoPlugin({
       collections: pageCollectionsSlugs,
       uploadsCollection: 'media',
-      generateURL: ({ doc }) => getPageUrl({ path: doc.path })!,
+      generateURL: ({ doc }) => generatePageURL({ path: doc.path, preview: false }) ?? '',
       generateTitle: ({ doc }) => `${doc.title} - ${websiteName}`,
       fields: ({ defaultFields }) => [...defaultFields, alternatePathsField()],
       interfaceName: 'SeoMetadata',
@@ -160,8 +166,8 @@ export default buildConfig({
       acl: 'public-read',
     }),
   ],
-  onInit: async (payload) => {
-    // Uncomment the following line to seed the CMS with default data
-    // await seedCMS(payload)
-  },
+  // Uncomment the following line to seed the CMS with default data
+  // onInit: async (payload) => {
+  //  await seedCMS(payload)
+  //},
 })

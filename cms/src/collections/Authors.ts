@@ -1,10 +1,9 @@
 import { anyone } from '@/shared/access/anyone'
 import { authenticated } from '@/shared/access/authenticated'
 import { CollectionGroups } from '@/shared/CollectionGroups'
-import { createPageCollectionConfig } from '@jhb.software/payload-pages-plugin'
-import { CollectionConfig } from 'payload'
+import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
 
-const Authors: CollectionConfig = createPageCollectionConfig({
+const Authors: PageCollectionConfig = {
   slug: 'authors',
   admin: {
     useAsTitle: 'name',
@@ -20,6 +19,15 @@ const Authors: CollectionConfig = createPageCollectionConfig({
       name: 'parent',
       sharedDocument: true,
     },
+  },
+  defaultPopulate: {
+    // only populate the fields that are required by the frontend (e.g. for author cards and list views)
+    name: true,
+    path: true,
+    profession: true,
+    photo: true,
+    excerpt: true,
+    description: true,
   },
   access: {
     read: anyone,
@@ -59,6 +67,6 @@ const Authors: CollectionConfig = createPageCollectionConfig({
       localized: true,
     },
   ],
-})
+}
 
 export default Authors
