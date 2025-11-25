@@ -96,8 +96,11 @@ importers:
       '@fontsource-variable/montserrat':
         specifier: ^5.2.8
         version: 5.2.8
+      '@payloadcms/live-preview':
+        specifier: 3.62.0
+        version: 3.62.0
       '@payloadcms/sdk':
-        specifier: ^3.62.0
+        specifier: 3.62.0
         version: 3.62.0(graphql@16.11.0)(typescript@5.9.3)
       astro:
         specifier: ^5.14.1
@@ -1143,6 +1146,9 @@ packages:
     peerDependencies:
       graphql: ^16.8.1
       payload: 3.62.0
+
+  '@payloadcms/live-preview@3.62.0':
+    resolution: {integrity: sha512-rtZAhieXKSgFhhB4OZ8n0hGFYRBs1yDIokDQczuL3T5N7pPNrd1b3EqYll3mlCy3qWY/LlQDTfTj03KtHMvM1Q==}
 
   '@payloadcms/next@3.62.0':
     resolution: {integrity: sha512-1LB0qW2gTlRUfQbRqm8DwmupF2WOBkt0cz095Oa8UdDZoKX/nvHjXNYbF7GRafIH9hhRNrNnqDokvmwGTe+3Xw==}
@@ -6509,6 +6515,8 @@ snapshots:
       tsx: 4.20.6
     transitivePeerDependencies:
       - typescript
+
+  '@payloadcms/live-preview@3.62.0': {}
 
   '@payloadcms/next@3.62.0(@types/react@19.2.0)(graphql@16.11.0)(monaco-editor@0.52.2)(next@15.5.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(sass@1.77.4))(payload@3.62.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)':
     dependencies:

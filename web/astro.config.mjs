@@ -20,8 +20,8 @@ export default defineConfig({
         access: 'public',
       }),
       CMS_URL: envField.string({
-        context: 'server',
-        access: 'secret',
+        context: 'client',
+        access: 'public',
       }),
       VERCEL_ENV: envField.enum({
         values: ['production', 'preview', 'development'],

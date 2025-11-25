@@ -175,3 +175,5 @@ dist
 # Astro
 .astro
 /.unlighthouse
+.vscode/terminals.json
+**/.vercel/output

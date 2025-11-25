@@ -1,5 +1,5 @@
 import { PayloadSDK } from '@payloadcms/sdk'
-import { CMS_URL } from 'astro:env/server'
+import { CMS_URL } from 'astro:env/client'
 import type { Config } from 'cms/src/payload-types'
 import { createCachedFetch } from './sdk/cachedFetch'
 

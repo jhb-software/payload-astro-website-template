@@ -16,7 +16,8 @@
   "dependencies": {
     "@astrojs/vercel": "^8.2.8",
     "@fontsource-variable/montserrat": "^5.2.8",
-    "@payloadcms/sdk": "^3.62.0",
+    "@payloadcms/live-preview": "3.62.0",
+    "@payloadcms/sdk": "3.62.0",
     "astro": "^5.14.1",
     "astro-seo-schema": "^5.1.0",
     "cms": "workspace:*",
