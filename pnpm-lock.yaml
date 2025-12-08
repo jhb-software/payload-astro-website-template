@@ -38,6 +38,9 @@ importers:
       '@payloadcms/ui':
         specifier: 3.62.0
         version: 3.62.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(sass@1.77.4))(payload@3.62.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.9.3)
+      '@vercel/functions':
+        specifier: ^3.3.4
+        version: 3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0)
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
@@ -92,7 +95,7 @@ importers:
     dependencies:
       '@astrojs/vercel':
         specifier: ^8.2.8
-        version: 8.2.8(@aws-sdk/credential-provider-web-identity@3.901.0)(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(sass@1.77.4))(react@19.2.1)(rollup@4.52.4)
+        version: 8.2.8(@aws-sdk/credential-provider-web-identity@3.901.0)(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(sass@1.77.4))(react@19.2.1)(rollup@4.52.4)
       '@fontsource-variable/montserrat':
         specifier: ^5.2.8
         version: 5.2.8
@@ -104,16 +107,16 @@ importers:
         version: 3.62.0(graphql@16.11.0)(typescript@5.9.3)
       astro:
         specifier: ^5.14.1
-        version: 5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
+        version: 5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
       astro-seo-schema:
         specifier: ^5.1.0
-        version: 5.1.0(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))(schema-dts@1.1.5)
+        version: 5.1.0(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))(schema-dts@1.1.5)
       cms:
         specifier: workspace:*
         version: link:../cms
       lucide-astro:
         specifier: ^0.544.0
-        version: 0.544.0(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))
+        version: 0.544.0(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))
       payload:
         specifier: 3.62.0
         version: 3.62.0(graphql@16.11.0)(typescript@5.9.3)
@@ -1946,6 +1949,15 @@ packages:
       '@aws-sdk/credential-provider-web-identity':
         optional: true
 
+  '@vercel/functions@3.3.4':
+    resolution: {integrity: sha512-IoP8Xfr1QeCm+Dv5od3bfPiw/VgLKsA7IBd/88M/Wr421HdbH4b6bW5z8CTxiz1QRpalrPFZcLdMdxu+2hAjZg==}
+    engines: {node: '>= 20'}
+    peerDependencies:
+      '@aws-sdk/credential-provider-web-identity': '*'
+    peerDependenciesMeta:
+      '@aws-sdk/credential-provider-web-identity':
+        optional: true
+
   '@vercel/nft@0.30.2':
     resolution: {integrity: sha512-pquXF3XZFg/T3TBor08rUhIGgOhdSilbn7WQLVP/aVSSO+25Rs4H/m3nxNDQ2x3znX7Z3yYjryN8xaLwypcwQg==}
     engines: {node: '>=18'}
@@ -1954,6 +1966,10 @@ packages:
   '@vercel/oidc@2.0.2':
     resolution: {integrity: sha512-59PBFx3T+k5hLTEWa3ggiMpGRz1OVvl9eN8SUai+A43IsqiOuAe7qPBf+cray/Fj6mkgnxm/D7IAtjc8zSHi7g==}
     engines: {node: '>= 18'}
+
+  '@vercel/oidc@3.0.5':
+    resolution: {integrity: sha512-fnYhv671l+eTTp48gB4zEsTW/YtRgRPnkI2nT7x6qw5rkI1Lq2hTmQIpHPgyThI0znLK+vX2n9XxKdXZ7BUbbw==}
+    engines: {node: '>= 20'}
 
   '@vercel/routing-utils@5.1.1':
     resolution: {integrity: sha512-EyOik06V2fPXAbKY087BM7DMOQOJK+9mubwwox1TkDi21tMeJcMYwsXwepm6ZmyZ5u0j1TpJW172fP4MbzaCcg==}
@@ -5212,14 +5228,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/vercel@8.2.8(@aws-sdk/credential-provider-web-identity@3.901.0)(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(sass@1.77.4))(react@19.2.1)(rollup@4.52.4)':
+  '@astrojs/vercel@8.2.8(@aws-sdk/credential-provider-web-identity@3.901.0)(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(sass@1.77.4))(react@19.2.1)(rollup@4.52.4)':
     dependencies:
       '@astrojs/internal-helpers': 0.7.3
       '@vercel/analytics': 1.5.0(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(sass@1.77.4))(react@19.2.1)
       '@vercel/functions': 2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0)
       '@vercel/nft': 0.30.2(rollup@4.52.4)
       '@vercel/routing-utils': 5.1.1
-      astro: 5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
+      astro: 5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
       esbuild: 0.25.10
       tinyglobby: 0.2.15
     transitivePeerDependencies:
@@ -7457,6 +7473,12 @@ snapshots:
     optionalDependencies:
       '@aws-sdk/credential-provider-web-identity': 3.901.0
 
+  '@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0)':
+    dependencies:
+      '@vercel/oidc': 3.0.5
+    optionalDependencies:
+      '@aws-sdk/credential-provider-web-identity': 3.901.0
+
   '@vercel/nft@0.30.2(rollup@4.52.4)':
     dependencies:
       '@mapbox/node-pre-gyp': 2.0.0
@@ -7480,6 +7502,8 @@ snapshots:
     dependencies:
       '@types/ms': 2.1.0
       ms: 2.1.3
+
+  '@vercel/oidc@3.0.5': {}
 
   '@vercel/routing-utils@5.1.1':
     dependencies:
@@ -7679,12 +7703,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  astro-seo-schema@5.1.0(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))(schema-dts@1.1.5):
+  astro-seo-schema@5.1.0(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))(schema-dts@1.1.5):
     dependencies:
-      astro: 5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
+      astro: 5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
       schema-dts: 1.1.5
 
-  astro@5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1):
+  astro@5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1):
     dependencies:
       '@astrojs/compiler': 2.13.0
       '@astrojs/internal-helpers': 0.7.3
@@ -7738,7 +7762,7 @@ snapshots:
       ultrahtml: 1.6.0
       unifont: 0.5.2
       unist-util-visit: 5.0.0
-      unstorage: 1.17.1(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))
+      unstorage: 1.17.1(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))
       vfile: 6.0.3
       vite: 6.3.6(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1)(sass@1.77.4)(tsx@4.20.6)(yaml@2.8.1)
       vitefu: 1.1.1(vite@6.3.6(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1)(sass@1.77.4)(tsx@4.20.6)(yaml@2.8.1))
@@ -9249,9 +9273,9 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lucide-astro@0.544.0(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)):
+  lucide-astro@0.544.0(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)):
     dependencies:
-      astro: 5.14.1(@types/node@24.6.2)(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
+      astro: 5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
 
   magic-string@0.30.19:
     dependencies:
@@ -10943,7 +10967,7 @@ snapshots:
       '@unrs/resolver-binding-win32-ia32-msvc': 1.11.1
       '@unrs/resolver-binding-win32-x64-msvc': 1.11.1
 
-  unstorage@1.17.1(@vercel/functions@2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0)):
+  unstorage@1.17.1(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0)):
     dependencies:
       anymatch: 3.1.3
       chokidar: 4.0.3
@@ -10954,7 +10978,7 @@ snapshots:
       ofetch: 1.4.1
       ufo: 1.6.1
     optionalDependencies:
-      '@vercel/functions': 2.2.13(@aws-sdk/credential-provider-web-identity@3.901.0)
+      '@vercel/functions': 3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0)
 
   uri-js@4.4.1:
     dependencies:

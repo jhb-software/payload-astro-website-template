@@ -1,6 +1,7 @@
 import { alternatePathsField, payloadPagesPlugin } from '@jhb.software/payload-pages-plugin'
 import { hetznerStorage } from '@joneslloyd/payload-storage-hetzner'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { attachDatabasePool } from '@vercel/functions'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -100,6 +101,8 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: process.env.MONGODB_URI!,
+    // see https://vercel.com/guides/connection-pooling-with-functions
+    afterOpenConnection: async (adapter) => attachDatabasePool(adapter.connection.getClient()),
   }),
   email: resendAdapter({
     defaultFromAddress: 'cms@your-website.com',
