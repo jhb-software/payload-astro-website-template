@@ -1,13 +1,13 @@
 ---
-import type { 
-  Page, 
-  RichTextBlock as RichTextBlockType, 
+import type {
+  AuthorsBlock as AuthorsBlockType,
   BlogPostsBlock as BlogPostsBlockType,
-  AuthorsBlock as AuthorsBlockType 
+  Page,
+  RichTextBlock as RichTextBlockType,
 } from 'cms/src/payload-types'
-import RichTextBlock from './blocks/RichTextBlock/RichTextBlock.astro'
-import BlogPostsBlock from './blocks/BlogPostsBlock.astro'
 import AuthorsBlock from './blocks/AuthorsBlock.astro'
+import BlogPostsBlock from './blocks/BlogPostsBlock.astro'
+import RichTextBlock from './blocks/RichTextBlock/RichTextBlock.astro'
 
 export type Props = NonNullable<NonNullable<Page['sections']>[number]['blocks']>[number]
 
