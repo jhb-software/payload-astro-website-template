@@ -1,0 +1,14 @@
+---
+export const prerender = false
+
+import { defaultLocale } from '@/cms/locales'
+import type { Locale } from '@/cms/types'
+import { localeFromHeader } from '@/utils/localeFromHeader'
+
+const { headers } = Astro.request
+
+const locale: Locale = localeFromHeader(headers) || defaultLocale
+void locale // Using locale in a noop to avoid unused error by astro check (https://github.com/withastro/astro/issues/14684)
+
+return Astro.redirect(`/${locale}`, 302)
+---
