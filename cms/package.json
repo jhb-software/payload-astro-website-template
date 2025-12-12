@@ -29,10 +29,10 @@
     "@vercel/functions": "^3.3.4",
     "cross-env": "^10.1.0",
     "graphql": "^16.11.0",
-    "next": "15.5.7",
+    "next": "15.5.9",
     "payload": "3.65.0",
-    "react": "19.2.1",
-    "react-dom": "19.2.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "sharp": "^0.34.4"
   },
   "devDependencies": {
