@@ -145,7 +145,20 @@ export default buildConfig({
       uploadsCollection: 'media',
       generateURL: ({ doc }) => generatePageURL({ path: doc.path, preview: false }) ?? '',
       generateTitle: ({ doc }) => `${doc.title} - ${websiteName}`,
-      fields: ({ defaultFields }) => [...defaultFields, alternatePathsField()],
+      fields: ({ defaultFields }) => [
+        ...defaultFields,
+        {
+          name: 'noIndex',
+          type: 'checkbox',
+          index: true,
+          defaultValue: false,
+          admin: {
+            description:
+              'If checked, a noindex meta tag will be added to the page and it will be excluded from the sitemap.',
+          },
+        },
+        alternatePathsField(),
+      ],
       interfaceName: 'SeoMetadata',
     }),
     hetznerStorage({

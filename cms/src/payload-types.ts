@@ -106,6 +106,7 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('de' | 'en') | ('de' | 'en')[];
   globals: {
     header: Header;
     footer: Footer;
@@ -371,6 +372,10 @@ export interface SeoMetadata {
    * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
    */
   image?: (string | null) | Media;
+  /**
+   * If checked, a noindex meta tag will be added to the page and it will be excluded from the sitemap.
+   */
+  noIndex?: boolean | null;
   alternatePaths: {
     hreflang: string;
     path: string;
@@ -473,10 +478,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
-      } | null)
-    | ({
-        relationTo: 'payload-kv';
-        value: string | PayloadKv;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -605,6 +606,7 @@ export interface SeoMetadataSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
+  noIndex?: T;
   alternatePaths?:
     | T
     | {

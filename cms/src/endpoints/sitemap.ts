@@ -35,6 +35,7 @@ export async function getSitemap(req: PayloadRequest) {
       depth: 0, // do not fetch related docs
       where: {
         _status: { equals: 'published' },
+        'meta.noIndex': { not_equals: true },
       },
       select: {
         path: true,
