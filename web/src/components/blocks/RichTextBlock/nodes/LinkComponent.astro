@@ -62,7 +62,5 @@ const linkElement = createLinkElement(props.node)
   href={linkElement.href}
   target={linkElement.target}
   rel={linkElement.rel}
-  style={linkElement.style}
+  style={linkElement.style}><RichTextLexical nodes={node.children ?? []} /></a
 >
-  <RichTextLexical nodes={node.children ?? []} />
-</a>
