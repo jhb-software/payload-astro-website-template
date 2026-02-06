@@ -18,6 +18,10 @@ export default tseslint.config(
       // The following rules are not included in the "recommended" config
       'astro/no-set-text-directive': 'warn',
       'astro/no-unused-css-selector': 'warn',
+
+      // The following rules should be enabled in the future (refactoring required)
+      // 'astro/prefer-class-list-directive': 'warn',
+      // 'astro/sort-attributes': 'warn',
     },
   },
 )

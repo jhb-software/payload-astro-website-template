@@ -6,7 +6,20 @@ type Props = { pageProps: PageProps }
 
 const { pageProps } = Astro.props
 
-const cmsDocumentUrl = CMS_URL + `/admin/collections/${pageProps.collection}/${pageProps.id}`
+const locale = Astro.locals.globalState.locale
+const cmsDocumentUrl =
+  CMS_URL + `/admin/collections/${pageProps.collection}/${pageProps.id}?locale=${locale}`
+
+const labels = {
+  de: {
+    preview: 'Vorschaumodus',
+    editPage: 'Seite bearbeiten',
+  },
+  en: {
+    preview: 'Preview',
+    editPage: 'Edit Page',
+  },
+} as const
 
 // Hide toolbar if page is inside an iframe (like in the CMS preview)
 const isInIframe = Astro.request.headers.get('sec-fetch-dest') === 'iframe'
@@ -30,14 +43,14 @@ const isInIframe = Astro.request.headers.get('sec-fetch-dest') === 'iframe'
           <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
           <circle cx="12" cy="12" r="3" />
         </svg>
-        Preview Mode
+        {labels[locale].preview}
       </div>
       <a
         href={cmsDocumentUrl}
         target="_blank"
         class="flex items-center gap-2 rounded-sm bg-white/90 px-2 py-1 text-sm text-black no-underline hover:bg-neutral-200"
       >
-        Edit Page
+        {labels[locale].editPage}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="14"

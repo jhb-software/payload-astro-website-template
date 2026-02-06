@@ -2,6 +2,7 @@ import type { SitemapEntry } from 'cms/src/endpoints/sitemap'
 import { payloadSDK } from './sdk'
 import type { Locale } from './types'
 
+/** Fetches the sitemap from the CMS. */
 export async function getSitemap(locale: Locale): Promise<SitemapEntry[]> {
   const response = await payloadSDK.request({
     method: 'GET',

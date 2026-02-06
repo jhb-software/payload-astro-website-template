@@ -1,5 +1,5 @@
 import type { Access } from 'payload'
 
-export const isSelf: Access = ({ req: { user }, id }): boolean => {
+export const isSelf: Access = ({ id, req: { user } }): boolean => {
   return Boolean(user && user.id === id)
 }
