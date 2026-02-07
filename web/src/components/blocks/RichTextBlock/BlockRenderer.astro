@@ -1,0 +1,23 @@
+---
+import type { BlockNode, InlineBlockNode } from '@jhb.software/astro-payload-richtext-lexical'
+import type { CodeBlock as CodeBlockType } from 'cms/src/payload-types'
+import CodeBlock from '../CodeBlock.astro'
+
+type Props = {
+  node: BlockNode | InlineBlockNode
+  inline?: boolean
+}
+
+const { node } = Astro.props
+---
+
+{
+  (() => {
+    switch (node.fields.blockType) {
+      case 'code':
+        return <CodeBlock {...(node.fields as unknown as CodeBlockType)} />
+      default:
+        throw new Error(`Block type "${node.fields.blockType}" not implemented in RichTextBlock`)
+    }
+  })()
+}

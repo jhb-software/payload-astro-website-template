@@ -1,15 +1,30 @@
 ---
+import RichTextLexical from '@jhb.software/astro-payload-richtext-lexical/RichTextLexical.astro'
+import type { ResolveInternalLink } from '@jhb.software/astro-payload-richtext-lexical'
 import type { RichTextBlock as RichTextBlockType } from 'cms/src/payload-types'
-import RichTextLexical from './RichTextLexical.astro'
-import type { LexicalNode } from './types'
+import { normalizePath } from '../../../utils/normalizePath'
+import BlockRenderer from './BlockRenderer.astro'
+import UploadRenderer from './UploadRenderer.astro'
 
 type Props = Omit<RichTextBlockType, 'blockType'> & {
   class?: string
 }
 
 const { text, class: className } = Astro.props
+const { preview } = Astro.locals.globalState
+
+const resolveInternalLink: ResolveInternalLink = (doc) => {
+  if ('path' in doc && typeof doc.path === 'string') {
+    return normalizePath(doc.path, preview)
+  }
+  return undefined
+}
 ---
 
-<div class:list={['prose mx-auto !max-w-none', className]}>
-  <RichTextLexical nodes={text.root.children as unknown as LexicalNode[]} />
-</div>
+<RichTextLexical
+  nodes={text.root.children}
+  UploadRenderer={UploadRenderer}
+  BlockRenderer={BlockRenderer}
+  resolveInternalLink={resolveInternalLink}
+  class:list={['prose mx-auto !max-w-none', className]}
+/>

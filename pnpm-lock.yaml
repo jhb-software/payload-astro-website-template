@@ -99,6 +99,9 @@ importers:
       '@fontsource-variable/montserrat':
         specifier: ^5.2.8
         version: 5.2.8
+      '@jhb.software/astro-payload-richtext-lexical':
+        specifier: 0.3.1
+        version: 0.3.1(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))
       '@payloadcms/live-preview':
         specifier: 3.65.0
         version: 3.65.0
@@ -926,6 +929,12 @@ packages:
   '@isaacs/fs-minipass@4.0.1':
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
+
+  '@jhb.software/astro-payload-richtext-lexical@0.3.1':
+    resolution: {integrity: sha512-N+JnJe+S3hcmoEdBIcy2kI+2/ZYmNG5LKgeQ9g/QdRROVt0hR9nFGt/C9XQRxgGcXpwyiKXUrD9vPoBrBzr0gw==}
+    engines: {node: ^18.20.2 || >=20.9.0}
+    peerDependencies:
+      astro: '>=3.x'
 
   '@jhb.software/payload-pages-plugin@0.6.0-beta.3':
     resolution: {integrity: sha512-xeV3TKwkI6PkYWJIxHDA186/pBPX+qi69oY2EM2z2zKD0ZTX6MIjrI6uDYvNrAfVPfRaNywI+xFA9bBAdFqFEA==}
@@ -6230,6 +6239,10 @@ snapshots:
   '@isaacs/fs-minipass@4.0.1':
     dependencies:
       minipass: 7.1.2
+
+  '@jhb.software/astro-payload-richtext-lexical@0.3.1(astro@5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))':
+    dependencies:
+      astro: 5.14.1(@types/node@24.6.2)(@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.901.0))(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.4)(sass@1.77.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
 
   '@jhb.software/payload-pages-plugin@0.6.0-beta.3(@payloadcms/ui@3.65.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.65.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.65.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
