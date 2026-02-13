@@ -3,7 +3,7 @@ import { hetznerStorage } from '@joneslloyd/payload-storage-hetzner'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { seoPlugin } from '@payloadcms/plugin-seo'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { FixedToolbarFeature, lexicalEditor, LinkFeature } from '@payloadcms/richtext-lexical'
 import { attachDatabasePool } from '@vercel/functions'
 import path from 'path'
 import { buildConfig, CollectionConfig, CollectionSlug } from 'payload'
@@ -90,7 +90,13 @@ export default buildConfig({
   },
   globals: [Header, Footer, Labels],
   collections: collections,
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures.filter((feature) => feature.key !== 'relationship'),
+      FixedToolbarFeature(),
+      LinkFeature({ enabledCollections: pageCollectionsSlugs }),
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   csrf:
     process.env.NODE_ENV === 'production'
