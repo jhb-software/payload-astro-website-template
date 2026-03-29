@@ -1,5 +1,4 @@
 import CodeBlock from '@/blocks/CodeBlock'
-import { anyone } from '@/shared/access/anyone'
 import { authenticated } from '@/shared/access/authenticated'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
@@ -24,7 +23,7 @@ const Posts: PageCollectionConfig = {
     },
   },
   access: {
-    read: anyone,
+    read: authenticated,
     update: authenticated,
     delete: authenticated,
     create: authenticated,

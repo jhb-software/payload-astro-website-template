@@ -1,5 +1,6 @@
 import { PayloadSDK } from '@payloadcms/sdk'
 import { CMS_URL } from 'astro:env/client'
+import { CMS_API_KEY } from 'astro:env/server'
 import type { Config } from 'cms/src/payload-types'
 import { createCachedFetch } from './sdk/cachedFetch'
 
@@ -18,5 +19,10 @@ import { createCachedFetch } from './sdk/cachedFetch'
  */
 export const payloadSDK = new PayloadSDK<Config>({
   baseURL: CMS_URL + '/api',
+  baseInit: {
+    headers: {
+      Authorization: `api-keys API-Key ${CMS_API_KEY}`,
+    },
+  },
   fetch: createCachedFetch(globalThis.fetch),
 })

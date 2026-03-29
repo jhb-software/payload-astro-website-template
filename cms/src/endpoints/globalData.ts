@@ -16,6 +16,10 @@ export interface GlobalData {
  * This endpoint consolidates multiple requests into a single call for better performance.
  */
 export async function getGlobalData(req: PayloadRequest) {
+  if (!req.user) {
+    return new Response('Unauthorized', { status: 401 })
+  }
+
   const locale = req.query.locale as 'de' | 'en' | undefined
   if (!locale || typeof locale !== 'string' || (locale != 'de' && locale != 'en')) {
     return new Response('Locale is required', { status: 400 })

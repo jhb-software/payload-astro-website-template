@@ -23,6 +23,10 @@ export default defineConfig({
         context: 'client',
         access: 'public',
       }),
+      CMS_API_KEY: envField.string({
+        context: 'server',
+        access: 'secret',
+      }),
       VERCEL_ENV: envField.enum({
         values: ['production', 'preview', 'development'],
         context: 'server',

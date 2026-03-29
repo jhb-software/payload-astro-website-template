@@ -73,6 +73,7 @@ export type SupportedTimezones =
 
 export interface Config {
   auth: {
+    'api-keys': ApiKeyAuthOperations;
     users: UserAuthOperations;
   };
   blocks: {
@@ -83,6 +84,7 @@ export interface Config {
     posts: Post;
     authors: Author;
     media: Media;
+    'api-keys': ApiKey;
     redirects: Redirect;
     users: User;
     'payload-kv': PayloadKv;
@@ -96,6 +98,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'api-keys': ApiKeysSelect<false> | ApiKeysSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -118,12 +121,34 @@ export interface Config {
     labels: LabelsSelect<false> | LabelsSelect<true>;
   };
   locale: 'de' | 'en';
-  user: User & {
-    collection: 'users';
-  };
+  user:
+    | (ApiKey & {
+        collection: 'api-keys';
+      })
+    | (User & {
+        collection: 'users';
+      });
   jobs: {
     tasks: unknown;
     workflows: unknown;
+  };
+}
+export interface ApiKeyAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
   };
 }
 export interface UserAuthOperations {
@@ -394,6 +419,19 @@ export interface AuthorsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "api-keys".
+ */
+export interface ApiKey {
+  id: string;
+  type: 'website' | 'agent';
+  updatedAt: string;
+  createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -473,6 +511,10 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
+        relationTo: 'api-keys';
+        value: string | ApiKey;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: string | Redirect;
       } | null)
@@ -481,10 +523,15 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'api-keys';
+        value: string | ApiKey;
+      }
+    | {
+        relationTo: 'users';
+        value: string | User;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -494,10 +541,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: string;
-  user: {
-    relationTo: 'users';
-    value: string | User;
-  };
+  user:
+    | {
+        relationTo: 'api-keys';
+        value: string | ApiKey;
+      }
+    | {
+        relationTo: 'users';
+        value: string | User;
+      };
   key?: string | null;
   value?:
     | {
@@ -735,6 +787,18 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "api-keys_select".
+ */
+export interface ApiKeysSelect<T extends boolean = true> {
+  type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

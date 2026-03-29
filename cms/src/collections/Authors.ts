@@ -1,4 +1,3 @@
-import { anyone } from '@/shared/access/anyone'
 import { authenticated } from '@/shared/access/authenticated'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
@@ -30,7 +29,7 @@ const Authors: PageCollectionConfig = {
     description: true,
   },
   access: {
-    read: anyone,
+    read: authenticated,
     update: authenticated,
     delete: authenticated,
     create: authenticated,

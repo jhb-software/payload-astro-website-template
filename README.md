@@ -126,6 +126,15 @@ The [official SEO plugin](https://www.npmjs.com/package/@payloadcms/plugin-seo) 
 
 The [Payload pages plugin](https://www.npmjs.com/package/@jhb.software/payload-pages-plugin) is used to automatically generate paths, breadcrumbs, and alternate language paths for all pages. Documents from multiple collections can be nested to create hierarchical page structures.
 
+### API Key Authentication
+
+The template includes an API Keys collection that enables token-based authentication for external consumers. This serves two purposes:
+
+1. **Securing the CMS API**: All collection data and custom endpoints require authentication — no data is publicly accessible. The Astro frontend authenticates using an API key passed via the `Authorization` header.
+2. **Enabling AI agents**: API keys with the `agent` type can be issued to AI agents or automation tools, giving them scoped access to the CMS without sharing user credentials.
+
+API keys are managed via the CMS admin panel and are restricted to admin users only. Each key has a `type` field (`website` or `agent`) to categorize its intended use.
+
 ### Redirects Collection
 
 A dedicated collection for managing redirects, allowing you to handle old paths and maintain SEO when restructuring your site.

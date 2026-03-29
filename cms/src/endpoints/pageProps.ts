@@ -12,6 +12,10 @@ export type PageProps = Omit<StaticPageProps, 'paths'>
  * This is used for the preview mode in the frontend.
  */
 export async function getPagePropsByPath(req: PayloadRequest) {
+  if (!req.user) {
+    return new Response('Unauthorized', { status: 401 })
+  }
+
   const path = req.query.path as string | undefined
 
   if (!path) {

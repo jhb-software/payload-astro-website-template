@@ -9,6 +9,11 @@ export async function getRedirects(): Promise<Record<string, RedirectConfig>> {
   // the Astro config file, use process.env to access the environment variable instead.
   const payloadSDK = new PayloadSDK<Config>({
     baseURL: process.env.CMS_URL! + '/api',
+    baseInit: {
+      headers: {
+        Authorization: `api-keys API-Key ${process.env.CMS_API_KEY!}`,
+      },
+    },
   })
 
   const redirectsCms = await payloadSDK.find({

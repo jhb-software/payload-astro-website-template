@@ -2,7 +2,6 @@ import AuthorsBlock from '@/blocks/AuthorsBlock'
 import BlogPostsBlock from '@/blocks/BlogPostsBlock'
 import RichTextBlock from '@/blocks/RichTextBlock'
 import { heroSection } from '@/fields/heroSection'
-import { anyone } from '@/shared/access/anyone'
 import { authenticated } from '@/shared/access/authenticated'
 import { CollectionGroups } from '@/shared/CollectionGroups'
 import { PageCollectionConfig } from '@jhb.software/payload-pages-plugin'
@@ -18,7 +17,7 @@ const Pages: PageCollectionConfig = {
     drafts: true,
   },
   access: {
-    read: anyone,
+    read: authenticated,
     update: authenticated,
     delete: authenticated,
     create: authenticated,

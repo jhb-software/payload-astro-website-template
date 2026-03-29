@@ -13,6 +13,10 @@ export type StaticPageProps = {
  * Returns a list of all pages with the props the frontend needs to prerender them.
  */
 export async function getStatisPagesProps(req: PayloadRequest) {
+  if (!req.user) {
+    return new Response('Unauthorized', { status: 401 })
+  }
+
   const collectionItems: StaticPageProps[] = []
 
   for (const collection of pageCollectionsSlugs) {

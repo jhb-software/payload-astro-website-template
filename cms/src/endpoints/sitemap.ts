@@ -12,6 +12,10 @@ export type SitemapEntry = {
  * Returns a list of all sitemap entries for the given locale.
  */
 export async function getSitemap(req: PayloadRequest) {
+  if (!req.user) {
+    return new Response('Unauthorized', { status: 401 })
+  }
+
   const locale = String(req.query.locale) as Config['locale']
 
   if (!locale) {
