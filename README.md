@@ -26,12 +26,10 @@ Follow these steps to set up the project for local development:
 4. Create a `.env` file in both the `cms` and `web` folders. You can use the `.env.example` files as a reference in both folders which contain descriptions for each varialbe.
 
 5. Generate and set a secure secret key for the CMS:
-
    - Visit https://payloadsecret.io/ to generate a random 32-byte secret
    - Set this as your `PAYLOAD_SECRET` in the CMS `.env` file
 
 6. Set up MongoDB (if using MongoDB adapter):
-
    - Download and install [MongoDB Community Server](https://www.mongodb.com/try/download/community)
    - Optional but recommended: Install [MongoDB Compass](https://www.mongodb.com/try/download/compass) for database management
 
@@ -44,22 +42,18 @@ The CMS comes with a [seed script](https://github.com/jhb-software/payload-astro
 When adapting this template for your project, consider the following steps:
 
 1. Update the CMS base configuration:
-
    - Update the `websiteName`, `csrf` and `resend` configuration information in `payload.config.ts` to match your project details
 
 2. Update the website base configuration:
-
    - Update the `websiteConfig` in `web/src/config.ts` with your project details
    - Place your logo, favicon and other assets in the `web/public` directory
 
 3. Customize the CMS:
-
    - Review and modify the collections in `cms/src/collections` to match your content needs
    - Add or remove blocks in `cms/src/blocks` to match your content needs
    - Add or remove plugins based on your requirements
 
 4. Adapt the website:
-
    - Implement templates for your CMS collections in `web/src/layout/collections`
    - Add Astro components for your CMS blocks in `web/src/components/blocks`
    - Update the files which generate structured data in `web/src/schema.ts`
@@ -139,9 +133,17 @@ API keys are managed via the CMS admin panel and are restricted to admin users o
 
 A dedicated collection for managing redirects, allowing you to handle old paths and maintain SEO when restructuring your site.
 
-### Redeploy Website Button
+### Vercel Deployments Dashboard Widget
 
-The Astro website is fully static, so the CMS includes a convenient redeploy button that allows content editors to trigger a fresh build of the website with updated CMS data with a single click.
+The Astro website is fully static, so the CMS includes the [Vercel Deployments plugin](https://www.npmjs.com/package/@jhb.software/payload-vercel-deployments) to let content editors monitor the frontend's Vercel project and trigger a redeploy with a single click. The plugin registers a dashboard widget that shows the active and latest production deployment and exposes authenticated API endpoints for triggering deployments programmatically.
+
+See the `cms/src/payload.config.ts` file for the plugin configuration.
+
+### AI Alt Text Dashboard Widget
+
+The CMS uses the [Alt text plugin](https://www.npmjs.com/package/@jhb.software/payload-alt-text-plugin) to AI-generate alt texts for uploaded images via OpenAI. The plugin also registers an "Alt text health" dashboard widget that shows alt text coverage across the `media` collection and links to images that are still missing alt texts.
+
+See the `cms/src/payload.config.ts` file for the plugin configuration.
 
 ### Live Preview
 
