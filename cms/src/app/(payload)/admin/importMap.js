@@ -32,9 +32,14 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { AltTextField as AltTextField_0a0a871430f540863f89f94882312cf1 } from '@jhb.software/payload-alt-text-plugin/client'
+import { BulkGenerateAltTextsButton as BulkGenerateAltTextsButton_0a0a871430f540863f89f94882312cf1 } from '@jhb.software/payload-alt-text-plugin/client'
 import { HetznerClientUploadHandler as HetznerClientUploadHandler_8ac97c7c3d1014cb6b64a5b50ca764f3 } from '@joneslloyd/payload-storage-hetzner/client'
-import { DashboardView as DashboardView_f1b43199350a850613851a7d2ee73dfe } from '../../../components/views/DashboardView'
+import { AltTextHealthWidget as AltTextHealthWidget_a35949d21b38efe8500764b5b0b3638b } from '@jhb.software/payload-alt-text-plugin/server'
+import { VercelDeploymentWidget as VercelDeploymentWidget_7f7b3eb7b26a673ca6c8271b81a390dc } from '@jhb.software/payload-vercel-deployments/client'
+import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
+/** @type import('payload').ImportMap */
 export const importMap = {
   "@jhb.software/payload-pages-plugin/server#IsRootPageField": IsRootPageField_817212d6f65b4eb37176541413db3f8c,
   "@jhb.software/payload-pages-plugin/server#SlugField": SlugField_817212d6f65b4eb37176541413db3f8c,
@@ -70,6 +75,10 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "@jhb.software/payload-alt-text-plugin/client#AltTextField": AltTextField_0a0a871430f540863f89f94882312cf1,
+  "@jhb.software/payload-alt-text-plugin/client#BulkGenerateAltTextsButton": BulkGenerateAltTextsButton_0a0a871430f540863f89f94882312cf1,
   "@joneslloyd/payload-storage-hetzner/client#HetznerClientUploadHandler": HetznerClientUploadHandler_8ac97c7c3d1014cb6b64a5b50ca764f3,
-  "/components/views/DashboardView#DashboardView": DashboardView_f1b43199350a850613851a7d2ee73dfe
+  "@jhb.software/payload-alt-text-plugin/server#AltTextHealthWidget": AltTextHealthWidget_a35949d21b38efe8500764b5b0b3638b,
+  "@jhb.software/payload-vercel-deployments/client#VercelDeploymentWidget": VercelDeploymentWidget_7f7b3eb7b26a673ca6c8271b81a390dc,
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

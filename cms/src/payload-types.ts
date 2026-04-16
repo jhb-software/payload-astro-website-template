@@ -121,13 +121,12 @@ export interface Config {
     labels: LabelsSelect<false> | LabelsSelect<true>;
   };
   locale: 'de' | 'en';
-  user:
-    | (ApiKey & {
-        collection: 'api-keys';
-      })
-    | (User & {
-        collection: 'users';
-      });
+  widgets: {
+    'alt-text-health': AltTextHealthWidget;
+    'vercel-deployments': VercelDeploymentsWidget;
+    collections: CollectionsWidget;
+  };
+  user: ApiKey | User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -323,7 +322,11 @@ export interface Author {
  */
 export interface Media {
   id: string;
-  alt?: string | null;
+  alt: string;
+  /**
+   * Keywords which describe the image. Used when searching for the image.
+   */
+  keywords?: string[] | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -429,6 +432,7 @@ export interface ApiKey {
   enableAPIKey?: boolean | null;
   apiKey?: string | null;
   apiKeyIndex?: string | null;
+  collection: 'api-keys';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -469,6 +473,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -712,6 +717,7 @@ export interface AuthorsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  keywords?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -994,6 +1000,36 @@ export interface LabelsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "alt-text-health_widget".
+ */
+export interface AltTextHealthWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'medium' | 'large' | 'x-large' | 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vercel-deployments_widget".
+ */
+export interface VercelDeploymentsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'medium' | 'large' | 'x-large' | 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
