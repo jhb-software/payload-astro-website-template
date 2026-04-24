@@ -32,17 +32,20 @@ const isProductionDeployment = VERCEL_ENV === 'production'
 
   {
     !preview && isProductionDeployment && (
-      <script is:inline>
-        document.addEventListener('DOMContentLoaded', function () { 
-          plausible('404', { 
-            props: { 
-              path: document.location.pathname,
-              userAgent: navigator.userAgent,
-              referrer: document.referrer,
-            } 
-          }); 
-        });
-      </script>
+      <script
+        is:inline
+        set:html={`
+          document.addEventListener('DOMContentLoaded', function () {
+            plausible('404', {
+              props: {
+                path: document.location.pathname,
+                userAgent: navigator.userAgent,
+                referrer: document.referrer,
+              },
+            });
+          });
+        `}
+      />
     )
   }
 </Layout>
