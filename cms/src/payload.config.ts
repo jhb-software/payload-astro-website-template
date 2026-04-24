@@ -15,7 +15,6 @@ import { buildConfig, CollectionConfig, CollectionSlug } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import CodeBlock from './blocks/CodeBlock'
-import type { Media as MediaType } from './payload-types'
 import ApiKeys from './collections/ApiKeys'
 import Authors from './collections/Authors'
 import { Media } from './collections/Media'
@@ -30,6 +29,7 @@ import { getStatisPagesProps } from './endpoints/staticPages'
 import Footer from './globals/Footer'
 import Header from './globals/Header'
 import Labels from './globals/Labels'
+import type { Media as MediaType } from './payload-types'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

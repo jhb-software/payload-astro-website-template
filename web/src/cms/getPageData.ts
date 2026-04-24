@@ -1,6 +1,8 @@
-import type { CollectionSlug } from 'payload'
+import type { Config } from 'cms/src/payload-types'
 import { payloadSDK } from './sdk'
 import type { Locale, PageData } from './types'
+
+type CollectionSlug = keyof Config['collections']
 
 export async function getPageData(
   collection: CollectionSlug,
