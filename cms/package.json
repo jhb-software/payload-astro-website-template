@@ -13,7 +13,9 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "check": "cross-env NODE_OPTIONS=--no-deprecation tsc --noEmit",
+    "format:check": "prettier --check src"
   },
   "dependencies": {
     "@jhb.software/payload-alt-text-plugin": "^0.4.4",

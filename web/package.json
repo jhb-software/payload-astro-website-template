@@ -11,7 +11,8 @@
     "lint": "eslint --config eslint.config.js src",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
   },
   "dependencies": {
     "@astrojs/vercel": "^8.2.8",
