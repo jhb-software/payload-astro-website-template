@@ -14,7 +14,7 @@ const canonicalUrl = new URL(Astro.url.pathname, WEBSITE_URL)
 
 const ogImageUrl =
   'image' in meta && typeof meta.image === 'object' && meta.image?.url
-    ? getFileSize('og', meta.image).url
+    ? new URL(getFileSize('og', meta.image).url, WEBSITE_URL).toString()
     : websiteConfig.ogImage.url(locale)
 ---
 

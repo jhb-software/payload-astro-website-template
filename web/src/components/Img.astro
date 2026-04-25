@@ -1,4 +1,5 @@
 ---
+import { mediaUrl } from '@/cms/mediaUrl'
 import { VERCEL_ENV } from 'astro:env/server'
 import type { Media } from 'cms/src/payload-types'
 
@@ -41,7 +42,7 @@ export function validateFileSize(size: RawFileSize): ValidatedFileSize | undefin
 
   return {
     fileName: size.filename,
-    url: size.url,
+    url: mediaUrl(size.url),
     width: size.width ?? undefined,
     height: size.height ?? undefined,
   }
