@@ -9,14 +9,12 @@ export const postSchema = (post: Post, locale: string): WithContext<SchemaArticl
 
   const authorSchemas = authors.map((author) => authorSchema(author))
 
-  const postImageUrl = (post.image as Media)?.url
-
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
-    image: postImageUrl ?? undefined,
+    image: (post.image as Media)?.url ?? undefined,
     author: authorSchemas.length === 1 ? authorSchemas[0] : authorSchemas,
     publisher: organizationSchema(),
     datePublished: post.createdAt,
