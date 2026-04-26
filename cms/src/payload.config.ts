@@ -17,7 +17,7 @@ import { fileURLToPath } from 'url'
 import CodeBlock from './blocks/CodeBlock'
 import ApiKeys from './collections/ApiKeys'
 import Authors from './collections/Authors'
-import { Media } from './collections/Media'
+import { generateFileURL, Media } from './collections/Media'
 import Pages from './collections/Pages'
 import Posts from './collections/Posts'
 import { Redirects } from './collections/Redirects'
@@ -210,6 +210,7 @@ export default buildConfig({
           // serve files directly from S3 object storage to improve performance.
           // The frontend proxies these via /media/* with cache-control headers (see web/vercel.json).
           disablePayloadAccessControl: true,
+          generateFileURL,
         },
       },
       bucket: process.env.S3_BUCKET!,

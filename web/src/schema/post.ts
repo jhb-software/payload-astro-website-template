@@ -1,4 +1,3 @@
-import { absoluteMediaUrl } from '@/cms/mediaUrl'
 import { WEBSITE_URL } from 'astro:env/client'
 import type { Author, Media, Post } from 'cms/src/payload-types'
 import type { Article as SchemaArticle, WithContext } from 'schema-dts'
@@ -17,7 +16,7 @@ export const postSchema = (post: Post, locale: string): WithContext<SchemaArticl
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
-    image: postImageUrl ? absoluteMediaUrl(postImageUrl) : undefined,
+    image: postImageUrl ?? undefined,
     author: authorSchemas.length === 1 ? authorSchemas[0] : authorSchemas,
     publisher: organizationSchema(),
     datePublished: post.createdAt,
