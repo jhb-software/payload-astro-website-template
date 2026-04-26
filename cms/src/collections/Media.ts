@@ -42,14 +42,13 @@ export const Media: CollectionConfig = {
     // Specifying a function as adminThumbnail is the only way to fall back to different sizes.
     adminThumbnail: ({ doc }) => {
       const media = doc as unknown as MediaType
+      const filename =
+        media.sizes?.sm?.filename ||
+        media.sizes?.md?.filename ||
+        media.sizes?.lg?.filename ||
+        media.filename
 
-      return generateFileURL({
-        filename:
-          media.sizes?.sm?.filename ||
-          media.sizes?.md?.filename ||
-          media.sizes?.lg?.filename ||
-          media.filename,
-      })
+      return filename ? generateFileURL({ filename }) : null
     },
   },
   access: {
@@ -66,5 +65,5 @@ export const Media: CollectionConfig = {
  * Generates the public URL for a media file, overriding the raw S3 URL stored in the database
  * with the URL that the frontend should use to serve the file.
  */
-export const generateFileURL = ({ filename }: { filename: string | null | undefined }) =>
-  filename ? `${process.env.NEXT_PUBLIC_FRONTEND_URL!}/media/${filename}` : null
+export const generateFileURL = ({ filename }: { filename: string }): string =>
+  `${process.env.NEXT_PUBLIC_FRONTEND_URL!}/media/${filename}`
