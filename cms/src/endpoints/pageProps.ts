@@ -42,11 +42,10 @@ export async function getPagePropsByPath(req: PayloadRequest) {
   for (const collection of collections) {
     const data = await req.payload.find({
       collection: collection as CollectionSlug,
-      limit: 1000,
+      limit: 0, // fetch all docs
       locale: locale,
       depth: 0,
       // For pages which have not been published yet (draft), the CMS by default returns the first/oldest draft instead of the latest draft.
-      // This is a problem, because in the first version, there may be no parent set for all locales.
       // Therefore, set draft to true, which always returns the latest published or draft version.
       // ATTENTION: For published pages, this might return the latest unpublisheddraft instead of the published version.
       draft: true,
@@ -61,7 +60,6 @@ export async function getPagePropsByPath(req: PayloadRequest) {
         id: true,
         slug: true,
         path: true,
-        template: true,
       },
     })
 
