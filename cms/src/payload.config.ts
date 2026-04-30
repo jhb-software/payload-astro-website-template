@@ -4,11 +4,11 @@ import {
 } from '@jhb.software/payload-alt-text-plugin'
 import { alternatePathsField, payloadPagesPlugin } from '@jhb.software/payload-pages-plugin'
 import { vercelDeploymentsPlugin } from '@jhb.software/payload-vercel-deployments'
-import { hetznerStorage } from '@joneslloyd/payload-storage-hetzner'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { FixedToolbarFeature, lexicalEditor, LinkFeature } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { attachDatabasePool } from '@vercel/functions'
 import path from 'path'
 import { buildConfig, CollectionConfig, CollectionSlug } from 'payload'
@@ -17,7 +17,7 @@ import { fileURLToPath } from 'url'
 import CodeBlock from './blocks/CodeBlock'
 import ApiKeys from './collections/ApiKeys'
 import Authors from './collections/Authors'
-import { Media } from './collections/Media'
+import { generateFileURL, Media } from './collections/Media'
 import Pages from './collections/Pages'
 import Posts from './collections/Posts'
 import { Redirects } from './collections/Redirects'
@@ -204,23 +204,24 @@ export default buildConfig({
       ],
       interfaceName: 'SeoMetadata',
     }),
-    hetznerStorage({
-      // ## JUST FOR TESTING, REMOVE BEFORE PUBLISHING:
-      disableLocalStorage: false,
-      // ##
+    s3Storage({
       collections: {
         media: {
-          // serve files directly from hetzner object storage to improve performance
+          // serve files directly from S3 object storage to improve performance.
+          // The frontend proxies these via /media/* with cache-control headers (see web/vercel.json).
           disablePayloadAccessControl: true,
+          generateFileURL,
         },
       },
-      bucket: process.env.HETZNER_BUCKET!,
-      region: 'nbg1',
-      credentials: {
-        accessKeyId: process.env.HETZNER_ACCESS_KEY_ID!,
-        secretAccessKey: process.env.HETZNER_SECRET_ACCESS_KEY!,
+      bucket: process.env.S3_BUCKET!,
+      config: {
+        endpoint: process.env.S3_ENDPOINT,
+        region: process.env.S3_REGION,
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+        },
       },
-      cacheControl: 'public, max-age=2592000', // max age 30 days
       clientUploads: true,
       acl: 'public-read',
     }),

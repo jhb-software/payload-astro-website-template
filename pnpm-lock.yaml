@@ -17,9 +17,6 @@ importers:
       '@jhb.software/payload-vercel-deployments':
         specifier: ^0.2.1
         version: 0.2.1(@payloadcms/translations@3.83.0)(@payloadcms/ui@3.83.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@joneslloyd/payload-storage-hetzner':
-        specifier: ^3.55.2
-        version: 3.55.2(@payloadcms/plugin-cloud-storage@3.83.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react@19.2.3)
       '@payloadcms/db-mongodb':
         specifier: 3.83.0
         version: 3.83.0(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))
@@ -38,6 +35,9 @@ importers:
       '@payloadcms/richtext-lexical':
         specifier: 3.83.0
         version: 3.83.0(@faceless-ui/modal@3.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@faceless-ui/scroll-info@2.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@payloadcms/next@3.83.0(@types/react@19.2.0)(graphql@16.11.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(yjs@13.6.23)
+      '@payloadcms/storage-s3':
+        specifier: 3.83.0
+        version: 3.83.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
       '@payloadcms/translations':
         specifier: 3.83.0
         version: 3.83.0
@@ -1150,14 +1150,6 @@ packages:
       react: 19.2.4
       react-dom: 19.2.4
 
-  '@joneslloyd/payload-storage-hetzner@3.55.2':
-    resolution: {integrity: sha512-DRByszhEUrsuGXGFiiSP/AIhu4lL+0fNBDexPLN+rbgCxoECykRZkjHKN2g4OPzZJlyD8Dh5hFDIxvYfPgG9aA==}
-    engines: {node: ^18.20.2 || >=20.9.0}
-    peerDependencies:
-      '@payloadcms/plugin-cloud-storage': ^3.55.1
-      payload: ^3.55.1
-      react: ^18.0.0 || ^19.1.0
-
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
 
@@ -1408,6 +1400,12 @@ packages:
 
   '@payloadcms/sdk@3.83.0':
     resolution: {integrity: sha512-gubizEkCk0ubTJOnM+FAV2o+Ue6RobDub3oFYzYvu8VAbTVeLxIvnXL+Hyjvv0j57tEsJmsSud3jQE+2vfiU+g==}
+
+  '@payloadcms/storage-s3@3.83.0':
+    resolution: {integrity: sha512-HzhCJvEk4E49gvTAUjG2XZEiuAGg/X4sUllUQCZS5Rv/SBrDxVsWkzyVha6cXcnDo+lbz7aLfJOfp5C45iredA==}
+    engines: {node: ^18.20.2 || >=20.9.0}
+    peerDependencies:
+      payload: 3.83.0
 
   '@payloadcms/translations@3.83.0':
     resolution: {integrity: sha512-Ie7Ty9Myb75wQ/gEedal+1PInrOtCeJJxjQAfG8C6hg9tBKYtwnW1IoRp4HrN7vHyYVyG15LKhXC40TevQU9Zw==}
@@ -6642,17 +6640,6 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
 
-  '@joneslloyd/payload-storage-hetzner@3.55.2(@payloadcms/plugin-cloud-storage@3.83.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react@19.2.3)':
-    dependencies:
-      '@aws-sdk/client-s3': 3.901.0
-      '@aws-sdk/lib-storage': 3.903.0(@aws-sdk/client-s3@3.901.0)
-      '@aws-sdk/s3-request-presigner': 3.901.0
-      '@payloadcms/plugin-cloud-storage': 3.83.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
-      payload: 3.83.0(graphql@16.11.0)(typescript@5.9.3)
-      react: 19.2.3
-    transitivePeerDependencies:
-      - aws-crt
-
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
@@ -7070,6 +7057,23 @@ snapshots:
       - supports-color
       - typescript
       - utf-8-validate
+
+  '@payloadcms/storage-s3@3.83.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)':
+    dependencies:
+      '@aws-sdk/client-s3': 3.901.0
+      '@aws-sdk/lib-storage': 3.903.0(@aws-sdk/client-s3@3.901.0)
+      '@aws-sdk/s3-request-presigner': 3.901.0
+      '@payloadcms/plugin-cloud-storage': 3.83.0(@types/react@19.2.0)(monaco-editor@0.52.2)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.83.0(graphql@16.11.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
+      payload: 3.83.0(graphql@16.11.0)(typescript@5.9.3)
+    transitivePeerDependencies:
+      - '@types/react'
+      - aws-crt
+      - monaco-editor
+      - next
+      - react
+      - react-dom
+      - supports-color
+      - typescript
 
   '@payloadcms/translations@3.83.0':
     dependencies:

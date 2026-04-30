@@ -29,9 +29,22 @@
           "value": "geolocation=(), microphone=(), camera=(), payment=()"
         }
       ]
+    },
+    {
+      "source": "/media/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, s-maxage=31536000, stale-while-revalidate=86400, immutable"
+        }
+      ]
     }
   ],
   "rewrites": [
+    {
+      "source": "/media/:path*",
+      "destination": "https://your-bucket.nbg1.your-objectstorage.com/:path*"
+    },
     {
       "source": "/js/script.js",
       "destination": "https://plausible.io/js/plausible.js"

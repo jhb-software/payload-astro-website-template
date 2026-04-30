@@ -87,8 +87,20 @@ For database hosting, [MongoDB Atlas](https://www.mongodb.com/atlas/database) of
 
 ### Media Hosting
 
-The template uses [Hetzner S3 Object Storage](https://www.hetzner.com/de/storage/object-storage/) for media files, providing a cost-effective solution for small to medium-sized websites.
+The template uses the official [`@payloadcms/storage-s3`](https://www.npmjs.com/package/@payloadcms/storage-s3) plugin to store media in any S3-compatible bucket. [Hetzner S3 Object Storage](https://www.hetzner.com/de/storage/object-storage/) is a cost-effective default, but the same configuration works with AWS S3, Cloudflare R2, MinIO, etc. — just set `S3_ENDPOINT` and `S3_REGION` accordingly.
+
 For projects with larger budgets, I recommend using an image service with CDN and transformation capabilities like [Cloudinary](https://cloudinary.com/). Plugins are available for integrating Cloudinary with Payload.
+
+#### Serving media via the website's `/media` endpoint
+
+Although uploads are stored in S3, media is **served from the Astro website at `/media/*`**, not from the CMS or the bucket directly. The `web/vercel.json` file declares a Vercel rewrite that proxies `/media/:path*` to the S3 bucket and attaches long-lived `Cache-Control` headers; the CMS's `generateFileURL` hook (`cms/src/collections/Media.ts`) ensures every uploaded file is stored with a `${NEXT_PUBLIC_FRONTEND_URL}/media/<filename>` URL, so the frontend can render `media.url` directly without any rewriting at render time.
+
+Reasons for this indirection:
+
+- **Same-origin URLs** — images live on the same domain as the pages that embed them, which keeps the URL surface clean, simplifies CSP, and avoids cross-origin pitfalls (referrers, third-party cookies, mixed content).
+- **No CMS round-trip** — bypassing the CMS for every media fetch means image traffic does not open new database connections on the Payload deployment, keeping the CMS lightweight and isolating its scaling characteristics from public traffic.
+- **Full control over caching** — because the bytes are served by Vercel's edge (not the bucket directly), `Cache-Control` headers are set in `vercel.json` and benefit from Vercel's CDN. Cache headers no longer need to be configured on the storage adapter.
+- **Bucket portability** — switching providers (Hetzner → R2 → AWS S3 → …) only requires updating the rewrite destination and the `S3_*` env vars; existing image URLs in the database stay valid because they point at `/media/*` on the frontend, not at the bucket directly.
 
 ### Website Analytics
 
