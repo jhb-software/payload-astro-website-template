@@ -3,7 +3,7 @@ import Link from '@/components/Link.astro'
 import { initGlobalState } from '@/globalState'
 import Layout from '@/layout/Layout.astro'
 import { VERCEL_ENV } from 'astro:env/server'
-import { House } from 'lucide-astro'
+import House from 'lucide-astro/House'
 
 await initGlobalState(Astro)
 const { labels, locale, preview } = Astro.locals.globalState

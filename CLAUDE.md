@@ -90,6 +90,10 @@ This website implements JSON-LD structured data for SEO. All schema definitions 
 4. **URL Construction**: Always use `new URL(path, SITE_URL)`. Do not use `normalizePath`
 5. **Usage**: Import and call schema functions in layout files, then render with `<Schema item={schema} />`
 
+### Icon Imports
+
+Always import `lucide-astro` icons via the per-icon subpath (`import CalendarDays from 'lucide-astro/CalendarDays'`) — never the barrel `from 'lucide-astro'`, which drastically slows dev reloads.
+
 ### View Transitions
 
 This website uses Astro's View Transitions (`<ClientRouter />`). When writing client-side `<script>` tags that need to run on every page visit:
