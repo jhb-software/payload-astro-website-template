@@ -1,6 +1,6 @@
 ---
 import { websiteConfig } from '@/config'
-import '@fontsource-variable/montserrat'
+import { Font } from 'astro:assets'
 import { VERCEL_ENV } from 'astro:env/server'
 import { ClientRouter } from 'astro:transitions'
 import type { SeoMetadata } from 'cms/src/payload-types'
@@ -31,6 +31,8 @@ const enablePlausible = VERCEL_ENV === 'production' && !preview
 
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/icon.svg" sizes="any" type="image/svg+xml" />
+
+    <Font cssVariable="--font-montserrat" preload />
 
     <SEOMetadata {...meta} />
 

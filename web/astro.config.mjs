@@ -1,7 +1,7 @@
 // @ts-check
 import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
-import { defineConfig, envField } from 'astro/config'
+import { defineConfig, envField, fontProviders } from 'astro/config'
 import { getRedirects } from './src/cms/getRedirects'
 
 export default defineConfig({
@@ -34,4 +34,13 @@ export default defineConfig({
       }),
     },
   },
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: 'Montserrat',
+      cssVariable: '--font-montserrat',
+      weights: ['100 900'],
+      styles: ['normal'],
+    },
+  ],
 })
