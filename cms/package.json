@@ -43,13 +43,13 @@
     "@types/node": "^24.6.2",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.0",
-    "eslint": "^9.37.0",
+    "eslint": "^9.39.4",
     "eslint-config-next": "16.2.6",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "6.0.3"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.13.0"
   }
 }
