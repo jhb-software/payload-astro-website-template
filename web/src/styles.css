@@ -90,3 +90,25 @@
 @utility hyphenate-none {
   hyphens: none;
 }
+
+@layer utilities {
+  /* Rich text (Tailwind Typography) themed with the project's brand colors. */
+  .prose {
+    --tw-prose-body: var(--color-slate-700);
+    --tw-prose-bold: var(--color-slate-700);
+    --tw-prose-bullets: var(--color-primary);
+    --tw-prose-counters: var(--color-primary);
+    --tw-prose-quote-borders: var(--color-primary);
+
+    /* Break long unbreakable strings (URLs, emails) so they wrap instead of overflowing. */
+    overflow-wrap: anywhere;
+  }
+
+  .prose-invert {
+    --tw-prose-body: white;
+    --tw-prose-bold: white;
+    --tw-prose-bullets: white;
+    --tw-prose-counters: white;
+    --tw-prose-quote-borders: rgba(255, 255, 255, 0.4);
+  }
+}
