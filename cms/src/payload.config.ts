@@ -156,10 +156,16 @@ export default buildConfig({
     }),
     payloadAltTextPlugin({
       collections: [Media.slug as CollectionSlug],
-      resolver: altTextOpenAIResolver({
-        apiKey: process.env.OPENAI_API_KEY!,
-        model: 'gpt-4.1-mini',
-      }),
+      resolver: process.env.OPENAI_API_KEY
+        ? altTextOpenAIResolver({
+            apiKey: process.env.OPENAI_API_KEY,
+            model: 'gpt-4.1-mini',
+          })
+        : {
+            key: 'disabled',
+            resolve: async () => ({ success: false, error: 'No OpenAI API key configured' }),
+            resolveBulk: async () => ({ success: false, error: 'No OpenAI API key configured' }),
+          },
       getImageThumbnail: (doc: Record<string, unknown>) => {
         const media = doc as unknown as MediaType
 
