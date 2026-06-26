@@ -7,7 +7,7 @@ import { getRedirects } from './src/cms/getRedirects'
 export default defineConfig({
   redirects: await getRedirects(),
   adapter: vercel({
-    edgeMiddleware: true,
+    middlewareMode: 'edge',
   }),
   vite: {
     plugins: [tailwindcss()],

@@ -157,7 +157,7 @@ export default buildConfig({
     payloadAltTextPlugin({
       collections: [Media.slug as CollectionSlug],
       resolver: altTextOpenAIResolver({
-        apiKey: process.env.OPENAI_API_KEY!,
+        apiKey: process.env.OPENAI_API_KEY ?? 'not-configured',
         model: 'gpt-4.1-mini',
       }),
       getImageThumbnail: (doc: Record<string, unknown>) => {
