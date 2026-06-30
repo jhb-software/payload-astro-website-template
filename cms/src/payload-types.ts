@@ -122,7 +122,6 @@ export interface Config {
   };
   locale: 'de' | 'en';
   widgets: {
-    'alt-text-health': AltTextHealthWidget;
     'vercel-deployments': VercelDeploymentsWidget;
     collections: CollectionsWidget;
   };
@@ -322,11 +321,6 @@ export interface Author {
  */
 export interface Media {
   id: string;
-  alt: string;
-  /**
-   * Keywords which describe the image. Used when searching for the image.
-   */
-  keywords?: string[] | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -716,8 +710,6 @@ export interface AuthorsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  keywords?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1000,16 +992,6 @@ export interface LabelsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "alt-text-health_widget".
- */
-export interface AltTextHealthWidget {
-  data?: {
-    [k: string]: unknown;
-  };
-  width: 'medium' | 'large' | 'x-large' | 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

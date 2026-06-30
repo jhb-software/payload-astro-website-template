@@ -37,7 +37,7 @@ const fileSize = getFileSize(size, image)
 
 <img
   src={fileSize.url}
-  alt={image.alt}
+  alt={(image as unknown as Record<string, string>).alt ?? ''}
   class={className}
   fetchpriority={fetchpriority}
   loading={loading}

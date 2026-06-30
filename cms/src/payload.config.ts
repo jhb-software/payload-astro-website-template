@@ -1,6 +1,7 @@
 import {
   openAIResolver as altTextOpenAIResolver,
   payloadAltTextPlugin,
+  type AltTextResolver,
 } from '@jhb.software/payload-alt-text-plugin'
 import { alternatePathsField, payloadPagesPlugin } from '@jhb.software/payload-pages-plugin'
 import { vercelDeploymentsPlugin } from '@jhb.software/payload-vercel-deployments'
@@ -91,7 +92,8 @@ export default buildConfig({
     dashboard: {
       defaultLayout: [
         { widgetSlug: 'vercel-deployments', width: 'medium' },
-        { widgetSlug: 'alt-text-health', width: 'medium' },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...(process.env.OPENAI_API_KEY ? [{ widgetSlug: 'alt-text-health', width: 'medium' } as any] : []),
       ],
       widgets: [],
     },
@@ -155,11 +157,14 @@ export default buildConfig({
       generatePageURL,
     }),
     payloadAltTextPlugin({
+      enabled: !!process.env.OPENAI_API_KEY,
       collections: [Media.slug as CollectionSlug],
-      resolver: altTextOpenAIResolver({
-        apiKey: process.env.OPENAI_API_KEY ?? 'not-configured',
-        model: 'gpt-4.1-mini',
-      }),
+      resolver: process.env.OPENAI_API_KEY
+        ? altTextOpenAIResolver({
+            apiKey: process.env.OPENAI_API_KEY,
+            model: 'gpt-4.1-mini',
+          })
+        : ({ key: 'noop', resolve: async () => ({ success: false as const, error: 'OPENAI_API_KEY not configured' }), resolveBulk: async () => ({ success: false as const, error: 'OPENAI_API_KEY not configured' }) } satisfies AltTextResolver),
       getImageThumbnail: (doc: Record<string, unknown>) => {
         const media = doc as unknown as MediaType
 
