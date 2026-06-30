@@ -1,7 +1,6 @@
 import {
   openAIResolver as altTextOpenAIResolver,
   payloadAltTextPlugin,
-  type AltTextResolver,
 } from '@jhb.software/payload-alt-text-plugin'
 import { alternatePathsField, payloadPagesPlugin } from '@jhb.software/payload-pages-plugin'
 import { vercelDeploymentsPlugin } from '@jhb.software/payload-vercel-deployments'
@@ -156,28 +155,33 @@ export default buildConfig({
     payloadPagesPlugin({
       generatePageURL,
     }),
-    payloadAltTextPlugin({
-      enabled: !!process.env.OPENAI_API_KEY,
-      collections: [Media.slug as CollectionSlug],
-      resolver: process.env.OPENAI_API_KEY
-        ? altTextOpenAIResolver({
-            apiKey: process.env.OPENAI_API_KEY,
-            model: 'gpt-4.1-mini',
-          })
-        : ({ key: 'noop', resolve: async () => ({ success: false as const, error: 'OPENAI_API_KEY not configured' }), resolveBulk: async () => ({ success: false as const, error: 'OPENAI_API_KEY not configured' }) } satisfies AltTextResolver),
-      getImageThumbnail: (doc: Record<string, unknown>) => {
-        const media = doc as unknown as MediaType
+    // The alt text plugin is only enabled when an OpenAI API key is configured.
+    // It is included conditionally (rather than via its `enabled` flag) because the
+    // plugin requires a `resolver`, and `openAIResolver` eagerly constructs an OpenAI
+    // client that throws when no API key is present.
+    ...(process.env.OPENAI_API_KEY
+      ? [
+          payloadAltTextPlugin({
+            collections: [Media.slug as CollectionSlug],
+            resolver: altTextOpenAIResolver({
+              apiKey: process.env.OPENAI_API_KEY,
+              model: 'gpt-4.1-mini',
+            }),
+            getImageThumbnail: (doc: Record<string, unknown>) => {
+              const media = doc as unknown as MediaType
 
-        if (!media.url) {
-          throw new Error('URL not found. Could not return image thumbnail.')
-        }
+              if (!media.url) {
+                throw new Error('URL not found. Could not return image thumbnail.')
+              }
 
-        // use sm if possible to reduce token count and speed up the generation of the alt text
-        return 'sizes' in media
-          ? (media.sizes?.sm?.url ?? media.sizes?.md?.url ?? media.sizes?.lg?.url ?? media.url!)
-          : media.url!
-      },
-    }),
+              // use sm if possible to reduce token count and speed up the generation of the alt text
+              return 'sizes' in media
+                ? (media.sizes?.sm?.url ?? media.sizes?.md?.url ?? media.sizes?.lg?.url ?? media.url!)
+                : media.url!
+            },
+          }),
+        ]
+      : []),
     vercelDeploymentsPlugin({
       vercel: {
         apiToken: process.env.VERCEL_API_TOKEN!,
