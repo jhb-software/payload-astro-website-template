@@ -44,17 +44,13 @@ export async function seedCMS(payload: Payload, force: boolean = false) {
     const profileImage = await payload.create({
       collection: 'media',
       filePath: './src/placeholder.webp',
-      data: {
-        alt: 'Max Mustermann Profile Photo',
-      },
+      data: { alt: 'Max Mustermann Profile Photo' },
     })
 
     const blogImage1 = await payload.create({
       collection: 'media',
       filePath: './src/placeholder.webp',
-      data: {
-        alt: 'Blog Post Featured Image',
-      },
+      data: { alt: 'Blog Post Featured Image' },
     })
 
     // Seed Labels global for all locales
