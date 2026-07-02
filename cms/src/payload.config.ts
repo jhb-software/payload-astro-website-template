@@ -91,8 +91,7 @@ export default buildConfig({
     dashboard: {
       defaultLayout: [
         { widgetSlug: 'vercel-deployments', width: 'medium' },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ...(process.env.OPENAI_API_KEY ? [{ widgetSlug: 'alt-text-health', width: 'medium' } as any] : []),
+        { widgetSlug: 'alt-text-health', width: 'medium' },
       ],
       widgets: [],
     },
@@ -155,33 +154,25 @@ export default buildConfig({
     payloadPagesPlugin({
       generatePageURL,
     }),
-    // The alt text plugin is only enabled when an OpenAI API key is configured.
-    // It is included conditionally (rather than via its `enabled` flag) because the
-    // plugin requires a `resolver`, and `openAIResolver` eagerly constructs an OpenAI
-    // client that throws when no API key is present.
-    ...(process.env.OPENAI_API_KEY
-      ? [
-          payloadAltTextPlugin({
-            collections: [Media.slug as CollectionSlug],
-            resolver: altTextOpenAIResolver({
-              apiKey: process.env.OPENAI_API_KEY,
-              model: 'gpt-4.1-mini',
-            }),
-            getImageThumbnail: (doc: Record<string, unknown>) => {
-              const media = doc as unknown as MediaType
+    payloadAltTextPlugin({
+      collections: [Media.slug as CollectionSlug],
+      resolver: altTextOpenAIResolver({
+        apiKey: process.env.OPENAI_API_KEY!,
+        model: 'gpt-4.1-mini',
+      }),
+      getImageThumbnail: (doc: Record<string, unknown>) => {
+        const media = doc as unknown as MediaType
 
-              if (!media.url) {
-                throw new Error('URL not found. Could not return image thumbnail.')
-              }
+        if (!media.url) {
+          throw new Error('URL not found. Could not return image thumbnail.')
+        }
 
-              // use sm if possible to reduce token count and speed up the generation of the alt text
-              return 'sizes' in media
-                ? (media.sizes?.sm?.url ?? media.sizes?.md?.url ?? media.sizes?.lg?.url ?? media.url!)
-                : media.url!
-            },
-          }),
-        ]
-      : []),
+        // use sm if possible to reduce token count and speed up the generation of the alt text
+        return 'sizes' in media
+          ? (media.sizes?.sm?.url ?? media.sizes?.md?.url ?? media.sizes?.lg?.url ?? media.url!)
+          : media.url!
+      },
+    }),
     vercelDeploymentsPlugin({
       vercel: {
         apiToken: process.env.VERCEL_API_TOKEN!,

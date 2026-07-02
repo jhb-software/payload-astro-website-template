@@ -1,4 +1,4 @@
-import type { Payload, RequiredDataFromCollectionSlug } from 'payload'
+import type { Payload } from 'payload'
 import { Config } from './payload-types'
 
 export async function seedCMS(payload: Payload, force: boolean = false) {
@@ -44,13 +44,13 @@ export async function seedCMS(payload: Payload, force: boolean = false) {
     const profileImage = await payload.create({
       collection: 'media',
       filePath: './src/placeholder.webp',
-      data: { alt: 'Max Mustermann Profile Photo' } as RequiredDataFromCollectionSlug<'media'>,
+      data: { alt: 'Max Mustermann Profile Photo' },
     })
 
     const blogImage1 = await payload.create({
       collection: 'media',
       filePath: './src/placeholder.webp',
-      data: { alt: 'Blog Post Featured Image' } as RequiredDataFromCollectionSlug<'media'>,
+      data: { alt: 'Blog Post Featured Image' },
     })
 
     // Seed Labels global for all locales
