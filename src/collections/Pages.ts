@@ -1,60 +1,38 @@
-import type { Block, CollectionConfig } from "payload";
+import type { CollectionConfig } from "payload";
 
-const hero: Block = {
-  slug: "hero",
-  fields: [
-    { name: "eyebrow", type: "text", localized: true },
-    { name: "heading", type: "text", localized: true, required: true },
-    { name: "text", type: "textarea", localized: true },
-    { name: "image", type: "upload", relationTo: "media" },
-  ],
-};
-
-const richText: Block = {
-  slug: "richText",
-  fields: [{ name: "content", type: "richText", localized: true, required: true }],
-};
-
-const gallery: Block = {
-  slug: "gallery",
-  fields: [
-    {
-      name: "images",
-      type: "array",
-      fields: [{ name: "image", type: "upload", relationTo: "media", required: true }],
-    },
-  ],
-};
-
-const embed: Block = {
-  slug: "embed",
-  fields: [
-    { name: "label", type: "text", localized: true },
-    { name: "url", type: "text", required: true },
-  ],
-};
+import { pageBlocks } from "@/blocks";
+import { previewURL } from "@/lib/preview";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
+  access: { read: () => true },
   admin: {
-    defaultColumns: ["title", "slug", "_status", "updatedAt"],
+    defaultColumns: ["title", "pageType", "slug", "_status"],
+    livePreview: { url: ({ data, locale }) => previewURL("pages", data.slug as string, locale) },
+    preview: (data, { locale }) => previewURL("pages", data.slug as string, locale),
     useAsTitle: "title",
   },
-  versions: {
-    drafts: true,
-  },
-  access: {
-    read: () => true,
-  },
+  versions: { drafts: true },
   fields: [
     { name: "title", type: "text", localized: true, required: true },
     { name: "slug", type: "text", localized: true, required: true, index: true },
     {
-      name: "layout",
-      type: "blocks",
-      blocks: [hero, richText, gallery, embed],
-      localized: true,
+      name: "pageType",
+      type: "select",
+      required: true,
+      unique: true,
+      options: [
+        "home",
+        "accommodation",
+        "rooms",
+        "business",
+        "surroundings",
+        "availability",
+        "aboutContact",
+        "privacy",
+      ],
     },
+    { name: "layout", type: "blocks", blocks: pageBlocks, localized: true },
     {
       name: "seo",
       type: "group",

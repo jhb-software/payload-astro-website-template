@@ -7,7 +7,9 @@ import sharp from "sharp";
 
 import { Media } from "@/collections/Media";
 import { Pages } from "@/collections/Pages";
+import { Rooms } from "@/collections/Rooms";
 import { Users } from "@/collections/Users";
+import { SiteSettings } from "@/globals/SiteSettings";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const src = path.resolve(root, "src");
@@ -20,7 +22,8 @@ export default buildConfig({
     },
     user: Users.slug,
   },
-  collections: [Pages, Media, Users],
+  collections: [Pages, Rooms, Media, Users],
+  globals: [SiteSettings],
   db: sqliteAdapter({
     client: {
       url: process.env.DATABASE_URL || "file:./payload.db",
@@ -32,6 +35,7 @@ export default buildConfig({
     fallback: true,
     locales: ["nl", "en", "de"],
   },
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000",
   secret: process.env.PAYLOAD_SECRET || "dev-secret",
   sharp,
   typescript: {

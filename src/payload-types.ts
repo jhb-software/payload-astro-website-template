@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
+    rooms: Room;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
+    rooms: RoomsSelect<false> | RoomsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -89,8 +91,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('nl' | 'en' | 'de') | ('nl' | 'en' | 'de')[];
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    siteSettings: SiteSetting;
+  };
+  globalsSelect: {
+    siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: 'nl' | 'en' | 'de';
   widgets: {
     collections: CollectionsWidget;
@@ -127,6 +133,8 @@ export interface Page {
   id: number;
   title: string;
   slug: string;
+  pageType:
+    'home' | 'accommodation' | 'rooms' | 'business' | 'surroundings' | 'availability' | 'aboutContact' | 'privacy';
   layout?:
     | (
         | {
@@ -134,6 +142,11 @@ export interface Page {
             heading: string;
             text?: string | null;
             image?: (number | null) | Media;
+            primaryLink?: {
+              label?: string | null;
+              page?: (number | null) | Page;
+              url?: string | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
@@ -159,18 +172,69 @@ export interface Page {
             blockType: 'richText';
           }
         | {
-            images?:
-              | {
-                  image: number | Media;
-                  id?: string | null;
-                }[]
-              | null;
+            heading: string;
+            text: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            image: number | Media;
+            imagePosition: 'left' | 'right';
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageText';
+          }
+        | {
+            images: {
+              image: number | Media;
+              id?: string | null;
+            }[];
             id?: string | null;
             blockName?: string | null;
             blockType: 'gallery';
           }
         | {
-            label?: string | null;
+            heading?: string | null;
+            features: {
+              title: string;
+              text?: string | null;
+              image?: (number | null) | Media;
+              icon?: string | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'featureGrid';
+          }
+        | {
+            heading?: string | null;
+            text?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'roomList';
+          }
+        | {
+            heading: string;
+            text?: string | null;
+            label: string;
+            page?: (number | null) | Page;
+            url?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta';
+          }
+        | {
+            label: string;
             url: string;
             id?: string | null;
             blockName?: string | null;
@@ -226,6 +290,50 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rooms".
+ */
+export interface Room {
+  id: number;
+  name: string;
+  slug: string;
+  summary?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  capacity: number;
+  bedType?: string | null;
+  features?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
+  coverImage?: (number | null) | Media;
+  gallery?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  sortOrder: number;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -276,6 +384,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'rooms';
+        value: number | Room;
       } | null)
     | ({
         relationTo: 'media';
@@ -334,6 +446,7 @@ export interface PayloadMigration {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  pageType?: T;
   layout?:
     | T
     | {
@@ -344,6 +457,13 @@ export interface PagesSelect<T extends boolean = true> {
               heading?: T;
               text?: T;
               image?: T;
+              primaryLink?:
+                | T
+                | {
+                    label?: T;
+                    page?: T;
+                    url?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -351,6 +471,16 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageText?:
+          | T
+          | {
+              heading?: T;
+              text?: T;
+              image?: T;
+              imagePosition?: T;
               id?: T;
               blockName?: T;
             };
@@ -363,6 +493,41 @@ export interface PagesSelect<T extends boolean = true> {
                     image?: T;
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        featureGrid?:
+          | T
+          | {
+              heading?: T;
+              features?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    image?: T;
+                    icon?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        roomList?:
+          | T
+          | {
+              heading?: T;
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        cta?:
+          | T
+          | {
+              heading?: T;
+              text?: T;
+              label?: T;
+              page?: T;
+              url?: T;
               id?: T;
               blockName?: T;
             };
@@ -382,6 +547,35 @@ export interface PagesSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rooms_select".
+ */
+export interface RoomsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  summary?: T;
+  description?: T;
+  capacity?: T;
+  bedType?: T;
+  features?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  coverImage?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  sortOrder?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -489,6 +683,116 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings".
+ */
+export interface SiteSetting {
+  id: number;
+  siteName: string;
+  defaultSeo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
+  navigation?:
+    | {
+        label: string;
+        page: number | Page;
+        id?: string | null;
+      }[]
+    | null;
+  footerNavigation?:
+    | {
+        label: string;
+        page: number | Page;
+        id?: string | null;
+      }[]
+    | null;
+  contact?: {
+    email?: string | null;
+    phone?: string | null;
+    addressLines?:
+      | {
+          line: string;
+          id?: string | null;
+        }[]
+      | null;
+    googleMapsUrl?: string | null;
+  };
+  socialLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  availabilityEmbed?: {
+    providerLabel?: string | null;
+    embedUrl?: string | null;
+    fallbackUrl?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  defaultSeo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  navigation?:
+    | T
+    | {
+        label?: T;
+        page?: T;
+        id?: T;
+      };
+  footerNavigation?:
+    | T
+    | {
+        label?: T;
+        page?: T;
+        id?: T;
+      };
+  contact?:
+    | T
+    | {
+        email?: T;
+        phone?: T;
+        addressLines?:
+          | T
+          | {
+              line?: T;
+              id?: T;
+            };
+        googleMapsUrl?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  availabilityEmbed?:
+    | T
+    | {
+        providerLabel?: T;
+        embedUrl?: T;
+        fallbackUrl?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

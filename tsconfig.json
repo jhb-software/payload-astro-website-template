@@ -3,6 +3,7 @@
     "target": "ES2023",
     "lib": ["DOM", "DOM.Iterable", "ES2023"],
     "allowJs": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,

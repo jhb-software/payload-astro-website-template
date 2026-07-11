@@ -1,10 +1,10 @@
 # De Fryhof
 
-Minimal Payload + TanStack Start scaffold.
+Small localized marketing site with Payload mounted in Next.js.
 
 ## Stack
 
-- TanStack Start
+- Next.js 16
 - Payload CMS
 - Tailwind CSS v4
 - shadcn-style components
@@ -16,8 +16,11 @@ Minimal Payload + TanStack Start scaffold.
 
 ```sh
 pnpm install
+pnpm seed
 pnpm dev
 pnpm check
 ```
 
 Open `/admin` for Payload.
+
+The public site uses Dutch at `/`, English at `/en`, and German at `/de`.

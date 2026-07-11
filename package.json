@@ -9,6 +9,8 @@
     "payload": "NODE_OPTIONS=--no-deprecation payload",
     "generate:importmap": "NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "NODE_OPTIONS=--no-deprecation payload generate:types",
+    "seed": "NODE_OPTIONS=--no-deprecation payload run src/seed.ts",
+    "test": "node --experimental-strip-types --test src/**/*.test.ts",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint .",
     "format": "oxfmt .",

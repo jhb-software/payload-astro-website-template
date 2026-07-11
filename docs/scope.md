@@ -13,7 +13,11 @@ Build a small marketing and group accommodation CMS for De Fryhof.
 - Layout blocks:
   - hero
   - rich text
+  - image and text
   - gallery
+  - feature grid
+  - room list
+  - call to action
   - embed
 
 ## Out
