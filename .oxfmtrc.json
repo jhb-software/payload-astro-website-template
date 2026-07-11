@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": [
+    "node_modules/",
+    "dist/",
+    ".next/",
+    ".output/",
+    ".nitro/",
+    ".vite/",
+    ".claude/",
+    "pnpm-lock.yaml",
+    "src/app/(payload)/admin/importMap.js",
+    "src/payload-types.ts"
+  ]
+}

@@ -1,31 +1,35 @@
 packages:
-  - "web"
-  - "cms"
-
-overrides:
-  path-to-regexp@<6.3.0: "^6.3.0"
-  mongoose@<8.22.1: ">=8.22.1"
-  yaml@<2.8.3: ">=2.8.3"
-  postcss@<8.5.10: ">=8.5.10"
-  uuid: "^11.1.1"
-  "@smithy/config-resolver@<4.4.0": ">=4.4.0"
-  "brace-expansion@<1.1.13": ">=1.1.13 <2"
-  "devalue@<5.8.1": ">=5.8.1"
-  "fast-uri@<3.1.2": ">=3.1.2"
-  "fast-xml-parser@<5.7.0": ">=5.7.0"
-  "flatted@<3.4.2": ">=3.4.2"
-  "immutable@<4.3.8": ">=4.3.8"
-  "js-yaml@<4.1.1": ">=4.1.1"
-  "lodash@<4.18.0": ">=4.18.0"
-  "mdast-util-to-hast@<13.2.1": ">=13.2.1"
-  "minimatch@>=3.0.0 <3.1.4": ">=3.1.4 <4"
-  "picomatch@<2.3.2": ">=2.3.2 <3"
-  "picomatch@>=4.0.0 <4.0.4": ">=4.0.4"
-  "rollup@<4.59.0": ">=4.59.0"
-  "tar@<7.5.11": ">=7.5.11"
+  - .
 
 allowBuilds:
-  '@tailwindcss/oxide': true
+  "@parcel/watcher": true
   esbuild: true
   sharp: true
-  unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - "@typescript/typescript-aix-ppc64@7.0.2"
+  - "@typescript/typescript-darwin-arm64@7.0.2"
+  - "@typescript/typescript-darwin-x64@7.0.2"
+  - "@typescript/typescript-freebsd-arm64@7.0.2"
+  - "@typescript/typescript-freebsd-x64@7.0.2"
+  - "@typescript/typescript-linux-arm64@7.0.2"
+  - "@typescript/typescript-linux-arm@7.0.2"
+  - "@typescript/typescript-linux-loong64@7.0.2"
+  - "@typescript/typescript-linux-mips64el@7.0.2"
+  - "@typescript/typescript-linux-ppc64@7.0.2"
+  - "@typescript/typescript-linux-riscv64@7.0.2"
+  - "@typescript/typescript-linux-s390x@7.0.2"
+  - "@typescript/typescript-linux-x64@7.0.2"
+  - "@typescript/typescript-netbsd-arm64@7.0.2"
+  - "@typescript/typescript-netbsd-x64@7.0.2"
+  - "@typescript/typescript-openbsd-arm64@7.0.2"
+  - "@typescript/typescript-openbsd-x64@7.0.2"
+  - "@typescript/typescript-sunos-x64@7.0.2"
+  - "@typescript/typescript-win32-arm64@7.0.2"
+  - "@typescript/typescript-win32-x64@7.0.2"
+  - typescript@7.0.2
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - unrs-resolver
