@@ -17,12 +17,12 @@
   "dependencies": {
     "@astrojs/vercel": "^11.0.8",
     "@jhb.software/astro-payload-richtext-lexical": "0.3.4",
+    "@lucide/astro": "^1.35.0",
     "@payloadcms/live-preview": "3.88.0",
     "@payloadcms/sdk": "3.88.0",
     "astro": "^7.2.8",
     "astro-seo-schema": "^7.0.0",
     "cms": "workspace:*",
-    "lucide-astro": "^0.556.0",
     "payload": "3.88.0",
     "schema-dts": "^2.0.0"
   },
