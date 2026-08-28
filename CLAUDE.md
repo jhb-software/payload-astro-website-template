@@ -92,7 +92,7 @@ This website implements JSON-LD structured data for SEO. All schema definitions 
 
 ### Icon Imports
 
-Always import `lucide-astro` icons via the per-icon subpath (`import CalendarDays from 'lucide-astro/CalendarDays'`) — never the barrel `from 'lucide-astro'`, which drastically slows dev reloads.
+Always import `@lucide/astro` icons via the per-icon subpath, using the icon's kebab-case name (`import CalendarDays from '@lucide/astro/icons/calendar-days'`) — never the barrel `from '@lucide/astro'`, which drastically slows dev reloads.
 
 ### View Transitions
 
