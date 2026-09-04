@@ -33,18 +33,18 @@
     "@vercel/functions": "^3.9.5",
     "cross-env": "^10.1.0",
     "graphql": "^17.0.2",
-    "next": "16.3.3",
+    "next": "16.3.4",
     "payload": "3.88.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "sharp": "^0.35.4"
   },
   "devDependencies": {
-    "@types/node": "^26.4.0",
+    "@types/node": "^26.4.1",
     "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.5",
+    "@types/react-dom": "19.2.7",
     "eslint": "^9.39.5",
-    "eslint-config-next": "16.3.3",
+    "eslint-config-next": "16.3.4",
     "prettier": "^3.9.6",
     "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "6.0.3"
