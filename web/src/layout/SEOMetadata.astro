@@ -25,15 +25,13 @@ const ogImageUrl =
 
 <link rel="canonical" href={canonicalUrl} />
 
-{
-  meta.alternatePaths.map((alternatePath) => (
-    <link
-      rel="alternate"
-      href={`${WEBSITE_URL}${alternatePath.path}`}
-      hreflang={alternatePath.hreflang}
-    />
-  ))
-}
+{meta.alternatePaths.map((alternatePath) => (
+  <link
+    rel="alternate"
+    href={`${WEBSITE_URL}${alternatePath.path}`}
+    hreflang={alternatePath.hreflang}
+  />
+))}
 
 <!-- Open Graph Website related -->
 <meta property="og:site_name" content={websiteConfig.name} />

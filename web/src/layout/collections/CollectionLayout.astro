@@ -27,18 +27,16 @@ const pageData = await getPageData(pageProps.collection, pageProps.id, locale, {
   {preview && <LivePreviewRefreshPageScript />}
   {preview && <PreviewAdminToolbar pageProps={pageProps} />}
 
-  {
-    () => {
-      switch (pageProps.collection) {
-        case 'pages':
-          return <PageLayout page={pageData as Page} />
-        case 'posts':
-          return <PostLayout post={pageData as Post} breadcrumbs={pageData.breadcrumbs} />
-        case 'authors':
-          return <AuthorLayout author={pageData as Author} breadcrumbs={pageData.breadcrumbs} />
-        default:
-          throw new Error(`Collection ${pageProps.collection} has no layout yet.`)
-      }
+  {() => {
+    switch (pageProps.collection) {
+      case 'pages':
+        return <PageLayout page={pageData as Page} />
+      case 'posts':
+        return <PostLayout post={pageData as Post} breadcrumbs={pageData.breadcrumbs} />
+      case 'authors':
+        return <AuthorLayout author={pageData as Author} breadcrumbs={pageData.breadcrumbs} />
+      default:
+        throw new Error(`Collection ${pageProps.collection} has no layout yet.`)
     }
-  }
+  }}
 </Layout>

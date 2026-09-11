@@ -176,10 +176,10 @@ export default buildConfig({
     vercelDeploymentsPlugin({
       vercel: {
         apiToken: process.env.VERCEL_API_TOKEN!,
-        projectId: process.env.FRONTEND_VERCEL_PROJECT_ID!,
         teamId: process.env.FRONTEND_VERCEL_TEAM_ID,
       },
-      widget: {
+      deploymentTarget: {
+        projectId: process.env.FRONTEND_VERCEL_PROJECT_ID!,
         websiteUrl: process.env.NEXT_PUBLIC_FRONTEND_URL,
       },
     }),
