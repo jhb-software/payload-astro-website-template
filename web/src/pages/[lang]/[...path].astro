@@ -12,7 +12,7 @@ const props = Astro.props
 const { lang } = Astro.params
 
 if (!locales.includes(lang!)) {
-  return Astro.redirect(Astro.url.pathname, 404)
+  return new Response(null, { status: 404 })
 }
 const locale = lang as Locale
 ---

@@ -8,16 +8,14 @@ type Props = { node: UploadNode }
 const { node } = Astro.props
 ---
 
-{
-  (() => {
-    if (node.relationTo === 'media' && typeof node.value === 'object') {
-      return (
-        <Img
-          image={node.value as unknown as Media}
-          size="md"
-          class="w-full rounded-2xl md:max-w-128"
-        />
-      )
-    }
-  })()
-}
+{(() => {
+  if (node.relationTo === 'media' && typeof node.value === 'object') {
+    return (
+      <Img
+        image={node.value as unknown as Media}
+        size="md"
+        class="w-full rounded-2xl md:max-w-128"
+      />
+    )
+  }
+})()}

@@ -30,11 +30,10 @@ const isProductionDeployment = VERCEL_ENV === 'production'
     </Link>
   </section>
 
-  {
-    !preview && isProductionDeployment && (
-      <script
-        is:inline
-        set:html={`
+  {!preview && isProductionDeployment && (
+    <script
+      is:inline
+      set:html={`
           document.addEventListener('DOMContentLoaded', function () {
             plausible('404', {
               props: {
@@ -45,7 +44,6 @@ const isProductionDeployment = VERCEL_ENV === 'production'
             });
           });
         `}
-      />
-    )
-  }
+    ></script>
+  )}
 </Layout>

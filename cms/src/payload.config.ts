@@ -174,13 +174,13 @@ export default buildConfig({
       },
     }),
     vercelDeploymentsPlugin({
+      deploymentTarget: {
+        projectId: process.env.FRONTEND_VERCEL_PROJECT_ID!,
+        websiteUrl: process.env.NEXT_PUBLIC_FRONTEND_URL,
+      },
       vercel: {
         apiToken: process.env.VERCEL_API_TOKEN!,
-        projectId: process.env.FRONTEND_VERCEL_PROJECT_ID!,
         teamId: process.env.FRONTEND_VERCEL_TEAM_ID,
-      },
-      widget: {
-        websiteUrl: process.env.NEXT_PUBLIC_FRONTEND_URL,
       },
     }),
     seoPlugin({
