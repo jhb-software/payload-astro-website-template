@@ -150,6 +150,7 @@ export default buildConfig({
     CodeBlock,
   ],
   sharp,
+  graphQL: { disable: true },
   plugins: [
     payloadPagesPlugin({
       generatePageURL,
