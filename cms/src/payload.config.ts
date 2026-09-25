@@ -187,7 +187,10 @@ export default buildConfig({
       collections: pageCollectionsSlugs,
       uploadsCollection: 'media',
       generateURL: ({ doc }) => generatePageURL({ path: doc.path, preview: false }) ?? '',
-      generateTitle: ({ doc }) => `${doc.title} - ${websiteName}`,
+      generateTitle: ({ doc, collectionConfig }) => {
+        const titleField = collectionConfig?.admin?.useAsTitle ?? 'title'
+        return `${doc[titleField]} - ${websiteName}`
+      },
       fields: ({ defaultFields }) => [
         ...defaultFields,
         {
