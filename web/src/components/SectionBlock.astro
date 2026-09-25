@@ -14,17 +14,15 @@ export type Props = NonNullable<NonNullable<Page['sections']>[number]['blocks']>
 const { blockType, ...props } = Astro.props
 ---
 
-{
-  () => {
-    switch (blockType) {
-      case 'rich-text':
-        return <RichTextBlock {...(props as RichTextBlockType)} />
-      case 'blog-posts':
-        return <BlogPostsBlock {...(props as BlogPostsBlockType)} />
-      case 'authors':
-        return <AuthorsBlock {...(props as AuthorsBlockType)} />
-      default:
-        throw new Error('Block type not implemented: ' + blockType)
-    }
+{() => {
+  switch (blockType) {
+    case 'rich-text':
+      return <RichTextBlock {...(props as RichTextBlockType)} />
+    case 'blog-posts':
+      return <BlogPostsBlock {...(props as BlogPostsBlockType)} />
+    case 'authors':
+      return <AuthorsBlock {...(props as AuthorsBlockType)} />
+    default:
+      throw new Error('Block type not implemented: ' + blockType)
   }
-}
+}}

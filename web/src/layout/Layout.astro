@@ -36,23 +36,21 @@ const enablePlausible = VERCEL_ENV === 'production' && !preview
 
     <SEOMetadata {...meta} />
 
-    {
-      enablePlausible && (
-        <>
-          <script
-            is:inline
-            id="psbl"
-            data-domain={websiteConfig.domain}
-            src="/js/script.js"
-            async
-          />
-          <script
-            is:inline
-            set:html={`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
-          />
-        </>
-      )
-    }
+    {enablePlausible && (
+      <>
+        <script
+          is:inline
+          id="psbl"
+          data-domain={websiteConfig.domain}
+          src="/js/script.js"
+          async
+        ></script>
+        <script
+          is:inline
+          set:html={`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
+        ></script>
+      </>
+    )}
 
     <ClientRouter />
   </head>

@@ -10,7 +10,7 @@ export const prerender = false
 const { lang, path } = Astro.params
 
 if (!locales.includes(lang!)) {
-  return Astro.redirect(Astro.url.pathname, 404)
+  return new Response(null, { status: 404 })
 }
 const locale = lang as Locale
 const fullPath = `/${locale}${path ? '/' : ''}${path ?? ''}`
