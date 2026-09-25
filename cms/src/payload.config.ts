@@ -87,6 +87,11 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: ` - ${websiteName} CMS`,
+      openGraph: {
+        title: `${websiteName} CMS`,
+        siteName: `${websiteName} CMS`,
+        description: `${websiteName} CMS`,
+      },
     },
     dashboard: {
       defaultLayout: [
