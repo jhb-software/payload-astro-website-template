@@ -19,10 +19,8 @@ const schema = isRootPage ? organizationSchema() : pageSchema(pageData, locale)
 
 <HeroSection {...pageData.hero} breadcrumbs={pageData.breadcrumbs} />
 
-{
-  pageData.sections?.map((section, index) => (
-    <Section {...section} withoutTopSpace={index === 0 && !pageData.isRootPage} />
-  ))
-}
+{pageData.sections?.map((section, index) => (
+  <Section {...section} withoutTopSpace={index === 0 && !pageData.isRootPage} />
+))}
 
 <Schema item={schema} />

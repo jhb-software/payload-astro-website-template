@@ -30,44 +30,40 @@ const homePagePath = normalizePath(`/${locale ?? defaultLocale}`, preview)
   <div class="flex items-center gap-4">
     <nav>
       <ul class="hidden list-none gap-4 md:flex">
-        {
-          header.links?.map((link) => (
-            <li>
-              <div class="flex flex-col gap-0.5">
-                <Link path={(link.page as Page)?.path} class="!py-2">
-                  {link.label}
-                </Link>
-                {currentPath === normalizePath((link.page as Page)?.path, preview) && (
-                  <span class="h-0.5 w-full rounded-sm bg-slate-400" />
-                )}
-              </div>
-            </li>
-          ))
-        }
+        {header.links?.map((link) => (
+          <li>
+            <div class="flex flex-col gap-0.5">
+              <Link path={(link.page as Page)?.path} class="!py-2">
+                {link.label}
+              </Link>
+              {currentPath === normalizePath((link.page as Page)?.path, preview) && (
+                <span class="h-0.5 w-full rounded-sm bg-slate-400" />
+              )}
+            </div>
+          </li>
+        ))}
       </ul>
     </nav>
 
     <div class="hidden gap-2 md:flex">
-      {
-        alternatePaths.map(({ hreflang, path }, index) => {
-          return (
-            <>
-              <a
-                href={normalizePath(path, preview)}
-                class:list={[
-                  'text-sm font-medium uppercase',
-                  hreflang === locale
-                    ? 'text-primary underline'
-                    : 'hover:text-primary text-slate-600',
-                ]}
-              >
-                {hreflang}
-              </a>
-              {index < alternatePaths.length - 1 && <span class="text-slate-600">/</span>}
-            </>
-          )
-        })
-      }
+      {alternatePaths.map(({ hreflang, path }, index) => {
+        return (
+          <>
+            <a
+              href={normalizePath(path, preview)}
+              class:list={[
+                'text-sm font-medium uppercase',
+                hreflang === locale
+                  ? 'text-primary underline'
+                  : 'hover:text-primary text-slate-600',
+              ]}
+            >
+              {hreflang}
+            </a>
+            {index < alternatePaths.length - 1 && <span class="text-slate-600">/</span>}
+          </>
+        )
+      })}
     </div>
   </div>
 
@@ -96,38 +92,34 @@ const homePagePath = normalizePath(`/${locale ?? defaultLocale}`, preview)
 >
   <div class="flex h-full flex-col items-stretch justify-between">
     <ul class="flex flex-col gap-5">
-      {
-        header.links?.map((link) => (
-          <li>
-            <Link path={(link.page as Page)?.path} class="w-full !text-lg">
-              {link.label}
-            </Link>
-          </li>
-        ))
-      }
+      {header.links?.map((link) => (
+        <li>
+          <Link path={(link.page as Page)?.path} class="w-full !text-lg">
+            {link.label}
+          </Link>
+        </li>
+      ))}
     </ul>
 
     <div class="flex flex-row items-center justify-center gap-4">
-      {
-        alternatePaths.map(({ hreflang, path }, index) => {
-          return (
-            <>
-              <a
-                href={normalizePath(path, preview)}
-                class:list={[
-                  'text-lg font-medium uppercase',
-                  hreflang === locale
-                    ? 'text-primary underline'
-                    : 'hover:text-primary text-slate-600',
-                ]}
-              >
-                {hreflang}
-              </a>
-              {index < alternatePaths.length - 1 && <span class="text-slate-600">/</span>}
-            </>
-          )
-        })
-      }
+      {alternatePaths.map(({ hreflang, path }, index) => {
+        return (
+          <>
+            <a
+              href={normalizePath(path, preview)}
+              class:list={[
+                'text-lg font-medium uppercase',
+                hreflang === locale
+                  ? 'text-primary underline'
+                  : 'hover:text-primary text-slate-600',
+              ]}
+            >
+              {hreflang}
+            </a>
+            {index < alternatePaths.length - 1 && <span class="text-slate-600">/</span>}
+          </>
+        )
+      })}
     </div>
   </div>
 </section>

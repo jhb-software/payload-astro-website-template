@@ -12,14 +12,14 @@ const { title, subTitle, blocks, highlightBackground, withoutTopSpace = false } 
   class:list={[withoutTopSpace ? 'mb-16 space-y-6 py-16' : 'my-16 space-y-6 py-16']}
   sectionClass={highlightBackground ? 'bg-gray-200/20' : undefined}
 >
-  {
-    (title || subTitle) && (
-      <div class="space-y-2">
-        {title && <h2 class="text-center text-2xl font-bold">{title}</h2>}
-        {subTitle && <p class="text-center text-balance">{subTitle}</p>}
-      </div>
-    )
-  }
+  {(title || subTitle) && (
+    <div class="space-y-2">
+      {title && <h2 class="text-center text-2xl font-bold">{title}</h2>}
+      {subTitle && <p class="text-center text-balance">{subTitle}</p>}
+    </div>
+  )}
 
-  {blocks?.map((block) => <SectionBlock {...block} />)}
+  {blocks?.map((block) => (
+    <SectionBlock {...block} />
+  ))}
 </SectionShell>
