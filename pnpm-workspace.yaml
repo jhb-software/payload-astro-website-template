@@ -7,6 +7,7 @@ overrides:
   postcss@<8.5.10: ">=8.5.10"
   yaml@<2.8.3: ">=2.8.3"
   undici@<7.29.1: ">=7.29.1"
+  postcss-selector-parser@<7.1.6: "^7.1.6"
 
 allowBuilds:
   '@tailwindcss/oxide': true
