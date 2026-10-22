@@ -7,6 +7,7 @@ import {
   validatePreviewToken,
 } from '@/cms/previewToken'
 import type { Locale } from '@/cms/types'
+import PreviewUnauthorized from '@/components/PreviewUnauthorized.astro'
 import CollectionLayout from '@/layout/collections/CollectionLayout.astro'
 import { PREVIEW_SECRET } from 'astro:env/server'
 
@@ -27,11 +28,6 @@ if (urlToken) {
   return Astro.redirect(cleanUrl.pathname + cleanUrl.search, 302)
 }
 
-// Important: Only fetch data from the CMS if the token is valid
-if (!validatePreviewToken(Astro.cookies.get(PREVIEW_TOKEN_COOKIE_NAME)?.value, PREVIEW_SECRET)) {
-  return new Response('Unauthorized', { status: 403 })
-}
-
 const { lang, path } = Astro.params
 
 if (!locales.includes(lang!)) {
@@ -40,7 +36,25 @@ if (!locales.includes(lang!)) {
 const locale = lang as Locale
 const fullPath = `/${locale}${path ? '/' : ''}${path ?? ''}`
 
-const pageProps = await getPageProps(fullPath)
+const hasValidToken = validatePreviewToken(
+  Astro.cookies.get(PREVIEW_TOKEN_COOKIE_NAME)?.value,
+  PREVIEW_SECRET,
+)
+
+if (!hasValidToken) {
+  Astro.response.status = 403
+}
+
+// Important: Only fetch data from the CMS if the token is valid
+const pageProps = hasValidToken ? await getPageProps(fullPath) : null
+
+if (hasValidToken && !pageProps) {
+  return new Response(null, { status: 404, statusText: 'Not found' })
+}
 ---
 
-<CollectionLayout pageProps={pageProps} preview={true} locale={locale} />
+{pageProps ? (
+  <CollectionLayout pageProps={pageProps} preview={true} locale={locale} />
+) : (
+  <PreviewUnauthorized locale={locale} />
+)}

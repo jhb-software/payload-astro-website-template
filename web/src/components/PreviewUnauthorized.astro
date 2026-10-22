@@ -1,0 +1,35 @@
+---
+import '../styles.css'
+
+type Props = {
+  locale: string
+}
+
+const { locale } = Astro.props
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex" />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/icon.svg" sizes="any" type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="flex min-h-screen items-center justify-center p-4">
+      <div class="max-w-xl rounded-lg p-8 text-center">
+        <h1 class="mb-2 text-2xl font-bold">
+          {locale === 'de' ? 'Zugriff verweigert' : 'Access Denied'}
+        </h1>
+        <p class="mb-6 text-balance">
+          {locale === 'de'
+            ? 'Sie benötigen eine URL mit einem gültigen Vorschau-Token, um diese Seite anzuzeigen. Bitte öffnen Sie die Vorschau über das CMS.'
+            : 'You need a URL with a valid preview token to view this page. Please open the preview from the CMS.'}
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
