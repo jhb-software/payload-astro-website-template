@@ -129,6 +129,18 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: process.env.MONGODB_URI!,
+    // Cap per-lambda pool aggressively. Mongoose's default maxPoolSize is 100,
+    // and each warm Vercel instance keeps its own pool, so the default can
+    // exhaust Atlas connection limits with only a handful of warm instances.
+    // maxIdleTimeMS lets the driver close sockets before a frozen lambda
+    // leaves them hanging on the Atlas side.
+    connectOptions: {
+      maxPoolSize: 5,
+      minPoolSize: 0,
+      maxIdleTimeMS: 10_000,
+      serverSelectionTimeoutMS: 5_000,
+      socketTimeoutMS: 30_000,
+    },
     // see https://vercel.com/guides/connection-pooling-with-functions
     afterOpenConnection: async (adapter) => attachDatabasePool(adapter.connection.getClient()),
   }),
