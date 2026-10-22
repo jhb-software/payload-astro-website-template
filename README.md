@@ -16,17 +16,17 @@ Follow these steps to set up the project for local development:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/jhb-software/payload-astro-template.git
+   git clone https://github.com/jhb-software/payload-astro-website-template.git
    ```
 
 2. Open two terminals in a split view. One for the Astro website and one for the Payload CMS.
 
 3. In both terminals install the dependencies using `pnpm i`.
 
-4. Create a `.env` file in both the `cms` and `web` folders. You can use the `.env.example` files as a reference in both folders which contain descriptions for each varialbe.
+4. Create a `.env` file in both the `cms` and `web` folders. You can use the `.env.example` files as a reference in both folders which contain descriptions for each variable.
 
 5. Generate and set a secure secret key for the CMS:
-   - Visit https://payloadsecret.io/ to generate a random 32-byte secret
+   - Generate a random 32-byte secret by running `openssl rand -hex 32`
    - Set this as your `PAYLOAD_SECRET` in the CMS `.env` file
 
 6. Set up MongoDB (if using MongoDB adapter):
