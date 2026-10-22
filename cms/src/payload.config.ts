@@ -30,6 +30,7 @@ import Footer from './globals/Footer'
 import Header from './globals/Header'
 import Labels from './globals/Labels'
 import type { Media as MediaType } from './payload-types'
+import { generatePreviewToken } from './utils/previewToken'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -64,9 +65,17 @@ const generatePageURL = ({
   path: string | null
   preview: boolean
 }): string | null => {
-  return path && process.env.NEXT_PUBLIC_FRONTEND_URL
-    ? `${process.env.NEXT_PUBLIC_FRONTEND_URL}${preview ? '/preview' : ''}${path}`
-    : null
+  if (!path || !process.env.NEXT_PUBLIC_FRONTEND_URL) {
+    return null
+  }
+
+  const baseUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}${preview ? '/preview' : ''}${path}`
+
+  if (preview && process.env.PREVIEW_SECRET) {
+    return `${baseUrl}?preview-token=${encodeURIComponent(generatePreviewToken())}`
+  }
+
+  return baseUrl
 }
 
 export default buildConfig({

@@ -25,9 +25,9 @@ Follow these steps to set up the project for local development:
 
 4. Create a `.env` file in both the `cms` and `web` folders. You can use the `.env.example` files as a reference in both folders which contain descriptions for each variable.
 
-5. Generate and set a secure secret key for the CMS:
-   - Generate a random 32-byte secret by running `openssl rand -hex 32`
-   - Set this as your `PAYLOAD_SECRET` in the CMS `.env` file
+5. Generate the secrets with `openssl rand -hex 32`:
+   - `PAYLOAD_SECRET` in the CMS `.env` file
+   - `PREVIEW_SECRET` in both `.env` files (same value)
 
 6. Set up MongoDB (if using MongoDB adapter):
    - Download and install [MongoDB Community Server](https://www.mongodb.com/try/download/community)
@@ -160,6 +160,8 @@ See the `cms/src/payload.config.ts` file for the plugin configuration.
 ### Live Preview
 
 Real-time preview functionality allows content editors to see changes before publishing, improving the content creation workflow.
+
+The `/preview` routes are protected by HMAC-signed tokens: the CMS appends a token (signed with `PREVIEW_SECRET`, valid for 7 days) to preview URLs, and the website validates it and stores it in an HTTP-only cookie (see `web/src/cms/previewToken.ts`).
 
 ## Website Features
 

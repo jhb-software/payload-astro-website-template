@@ -43,6 +43,10 @@ export default defineConfig({
         context: 'server',
         access: 'secret',
       }),
+      PREVIEW_SECRET: envField.string({
+        context: 'server',
+        access: 'secret',
+      }),
       VERCEL_ENV: envField.enum({
         values: ['production', 'preview', 'development'],
         context: 'server',

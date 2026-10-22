@@ -1,11 +1,36 @@
 ---
 import { getPageProps } from '@/cms/getPageProps'
 import { locales } from '@/cms/locales'
+import {
+  PREVIEW_TOKEN_COOKIE_NAME,
+  setPreviewTokenCookie,
+  validatePreviewToken,
+} from '@/cms/previewToken'
 import type { Locale } from '@/cms/types'
 import CollectionLayout from '@/layout/collections/CollectionLayout.astro'
+import { PREVIEW_SECRET } from 'astro:env/server'
 
 // Preview mode, dont prerender these routes at build time
 export const prerender = false
+
+const urlToken = Astro.url.searchParams.get(PREVIEW_TOKEN_COOKIE_NAME)
+
+if (urlToken) {
+  // Remove the preview token from the URL to prevent users from seeing or unintentionally sharing it
+  const cleanUrl = new URL(Astro.url)
+  cleanUrl.searchParams.delete(PREVIEW_TOKEN_COOKIE_NAME)
+
+  if (validatePreviewToken(urlToken, PREVIEW_SECRET)) {
+    setPreviewTokenCookie(Astro.cookies, urlToken, Astro.url.protocol === 'https:')
+  }
+
+  return Astro.redirect(cleanUrl.pathname + cleanUrl.search, 302)
+}
+
+// Important: Only fetch data from the CMS if the token is valid
+if (!validatePreviewToken(Astro.cookies.get(PREVIEW_TOKEN_COOKIE_NAME)?.value, PREVIEW_SECRET)) {
+  return new Response('Unauthorized', { status: 403 })
+}
 
 const { lang, path } = Astro.params
 
