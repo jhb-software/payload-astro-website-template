@@ -11,6 +11,10 @@ overrides:
   zod@<4.6.6: ">=4.6.6"
   happy-dom@<21.0.4: ">=21.0.4"
   graphql-scalars@<2.0.1: ">=2.0.1"
+  glob@>=9.0.0 <14.0.2: ">=14.0.2"
+  minimatch@>=7.0.0 <11.0.1: ">=11.0.1"
+  "@emnapi/runtime@>=2.0.0-0 <2.0.0": "1.11.3"
+  "@emnapi/core@>=2.0.0-0 <2.0.0": "1.11.3"
 
 allowBuilds:
   '@tailwindcss/oxide': true
