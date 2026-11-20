@@ -21,20 +21,20 @@
     "@jhb.software/payload-alt-text-plugin": "^0.14.0",
     "@jhb.software/payload-pages-plugin": "^0.8.0",
     "@jhb.software/payload-vercel-deployments": "^0.4.1",
-    "@payloadcms/db-mongodb": "3.93.0",
-    "@payloadcms/email-resend": "3.93.0",
-    "@payloadcms/next": "3.93.0",
-    "@payloadcms/plugin-cloud-storage": "3.93.0",
-    "@payloadcms/plugin-seo": "3.93.0",
-    "@payloadcms/richtext-lexical": "3.93.0",
-    "@payloadcms/storage-s3": "3.93.0",
-    "@payloadcms/translations": "3.93.0",
-    "@payloadcms/ui": "3.93.0",
-    "@vercel/functions": "^3.11.1",
+    "@payloadcms/db-mongodb": "3.94.0",
+    "@payloadcms/email-resend": "3.94.0",
+    "@payloadcms/next": "3.94.0",
+    "@payloadcms/plugin-cloud-storage": "3.94.0",
+    "@payloadcms/plugin-seo": "3.94.0",
+    "@payloadcms/richtext-lexical": "3.94.0",
+    "@payloadcms/storage-s3": "3.94.0",
+    "@payloadcms/translations": "3.94.0",
+    "@payloadcms/ui": "3.94.0",
+    "@vercel/functions": "^3.11.3",
     "cross-env": "^10.1.0",
     "graphql": "^17.1.0",
     "next": "16.4.6",
-    "payload": "3.93.0",
+    "payload": "3.94.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "sharp": "^0.35.5"
@@ -43,13 +43,13 @@
     "@types/node": "^26.6.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "eslint-config-next": "16.4.6",
     "prettier": "^3.10.1",
     "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "6.0.3"
   },
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=22.23.5"
   }
 }
